@@ -37,7 +37,6 @@ export default function Map3() {
   });
   const [layers, setLayers] = useState([]);
   const [loading, setLoading] = useState(false);
-  //   const { PCGeojson, ACGeojson, StateGeojson } = useProvideContext(); // PCGeojson: geojson
   const {
     electionType,
     selected_party,
@@ -55,9 +54,7 @@ export default function Map3() {
     setIsFetchingGeojson,
     selected_Voter_Percentage,
   } = useFilterContextValue();
-  //console.log("loading", isFetchingGeojson);
-  //   const electionType = "Lok Sabha";
-  // loading = false;
+
   const [select_state, setSelect_state] = useState("Select State");
   const [select_constituency, setSelect_constituency] = useState({
     pcNo: -1,
@@ -65,8 +62,6 @@ export default function Map3() {
   });
   const [callToGetMapResult, setCallToGetMapResult] = useState(false);
   const [hoveredFeatureId, setHoveredFeatureId] = useState(null);
-  // const [stateName, setStateName] = useState(select_state);
-  // const [selectedConstituency, setSelectedConstituency] = useState(select_constituency);
 
   useEffect(() => {
     if (electionType === "STATE") {
@@ -122,19 +117,11 @@ export default function Map3() {
     //   setLayers([]);
     // }
   }, [select_constituency]);
-  // useEffect(() => {
-  //   if (
-  //     JSON.stringify(mapResult) !== JSON.stringify({}) //SO AT MMOUNTED IT NOT CALL BELOW CODE
-  //   ) {
-  //     setLayers([]);
-  //   }
-  // }, [mapResult]);
 
   // ELECTION TYPE BASIC MAP RESULT FETCH
   useEffect(() => {
     const getMapResult = async () => {
       setLoading(true);
-      //console.log("getMapResult ata mat=p", callToGetMapResult);
       const state = electionType === "STATE" ? `&state=${selected_state}` : "";
       try {
         const res = await fetch(
@@ -144,13 +131,7 @@ export default function Map3() {
             selected_Voter_Percentage.delta
           }&delta_type=${selected_Voter_Percentage.delta_type}${state}`
         );
-        // fetch(
-        //   `https://dhruvresearch.com/api/v2/result/map?election_type=${
-        //     electionType === "STATE" ? "VS" : "LS"
-        //   }`
-        // ); //party param &patry = selected_party, &state = selected_state , &year = selected_election_year, &constituency = selected_pc, &voter_percentage = selected_Voter_Percentage
         const a = await res.json();
-        // //console.log("geojson", a, c, d);
         console.log("mapResult", a);
 
         setMapResult(a.data);
@@ -163,7 +144,7 @@ export default function Map3() {
         //    zoom: windowWidth < 640 ? 2.5 : 3.5,
         // });
       } catch (error) {
-        //console.log(error);
+        console.log(error);
       }
     };
 
@@ -175,14 +156,7 @@ export default function Map3() {
 
   useEffect(() => {
     if (JSON.stringify(mapResult) !== "{}") setCallToGetMapResult(true);
-  }, [
-    electionType,
-    selected_party,
-    selected_state,
-    // selected_pc,
-    // setSelected_election_year,
-    selected_Voter_Percentage,
-  ]);
+  }, [electionType, selected_party, selected_state, selected_Voter_Percentage]);
 
   useEffect(() => {
     if (

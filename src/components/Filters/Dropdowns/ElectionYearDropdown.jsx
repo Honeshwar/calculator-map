@@ -69,7 +69,7 @@ export default function ElectionYearDropdown() {
     setShowPartyDropDown,
   } = useFilterContextValue();
   return (
-    <fieldset className=" border-[1.2px] border-[lightgray] rounded-md w-[250px]   py-1 pb-[8px] relative">
+    <fieldset className="cursor-pointer border-[1.2px] border-[lightgray] rounded-md w-[250px]   py-1 pb-[8px] relative">
       <legend className="text-[12px] text-gray-500 mx-2 px-1 relative">
         Election Year <span className="text-[red]">*</span>
       </legend>
