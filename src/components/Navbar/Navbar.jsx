@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./navbar.module.css";
-import span from "next/link";
+import a from "next/link";
 import Image from "next/image";
 import CategoryDropdown from "../../components/Navbar/CategoryDropdown";
 
@@ -44,9 +44,9 @@ const Navbar = () => {
     <nav className={styles.navbar}>
       <div className={styles.navbarContainer}>
         <div className="navbar-logo">
-          <span href="../index.html">
+          <a href="../index.html">
             <img src="/dhruv_logo.jpg" width={100} height={100} alt="" />
-          </span>
+          </a>
         </div>
         <div className={styles.toggler} onClick={toggleNavbar}>
           <img src="/toggle.svg" width={30} height={30} />
@@ -54,10 +54,10 @@ const Navbar = () => {
         <div
           className={`${styles.navbarLinks} ${isOpen ? styles.collapsed : ""}`}
         >
-          <span href="../index.html">Home</span>
-          <span href="index.html#about">About Us</span>
-          <span href="index.html#what">What we do</span>
-          <span href="index.html#solution1">Solutions</span>
+          <a href="../index.html">Home</a>
+          <a href="index.html#about">About Us</a>
+          <a href="index.html#what">What we do</a>
+          <a href="index.html#solution1">Solutions</a>
           <a
             className={styles.activeLink}
             onClick={toggleDropDown}
@@ -73,26 +73,23 @@ const Navbar = () => {
               )}
             </div>
           </a>
-          <span href="index.html#join_our_panel">Join our panel</span>
-          <span
-            href="index.html# Election_Results"
-            className={styles.activeLink}
-          >
+          <a href="index.html#join_our_panel">Join our panel</a>
+          <a href="index.html# Election_Results" className={styles.activeLink}>
             <div className="flex flex-col">
               Election Results
               <img src="/Star 1.png" alt="star" />
             </div>
-          </span>
+          </a>
 
-          <span href="contact.html">Contat Us</span>
-          <span href="/careers.html" className={styles.carrers}>
+          <a href="contact.html">Contat Us</a>
+          <a href="/careers.html" className={styles.carrers}>
             <button>Careers</button>
-          </span>
+          </a>
         </div>
         <div className={styles.carrers}>
-          <span href="/careers.html">
+          <a href="/careers.html">
             <button>Careers</button>
-          </span>
+          </a>
         </div>
       </div>
     </nav>
