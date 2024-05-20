@@ -1,0 +1,144 @@
+.navbar {
+  background-color: #ffcc00;
+  color: #fff;
+  padding: 12px 10px;
+  position: sticky;
+  top: 0;
+  z-index: 9;
+  width: 100%;
+}
+
+.toggler {
+  display: none;
+  padding: 3px;
+  border: 1px solid rgb(41, 41, 41);
+  border-radius: 5px;
+}
+
+.navbarContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* max-width: 1200px; */
+  margin: 0 auto;
+  padding: 0 10px;
+}
+
+.navbar button {
+  color: #ffcc00;
+  background-color: black;
+  font-weight: bold;
+  box-shadow: -2px 8px 14px rgba(0, 0, 0, 0.24);
+  padding: 8px 35px;
+  border-radius: 6px;
+}
+
+.navbarLinks button {
+  display: none;
+}
+
+.navbarLinks {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbarLinks a {
+  color: #fff;
+  text-decoration: none;
+  margin-left: 35px;
+  font-weight: 600;
+  color: black;
+}
+
+.collapsed {
+  display: unset;
+}
+
+.activeLink {
+  position: relative;
+  display: inline-flex;
+}
+
+.activeLink img {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.dropDown {
+  position: absolute;
+  top: 150%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #ffcc00;
+  border-radius: 6px;
+  padding: 0;
+}
+
+.dropDownItem {
+  margin: 0px;
+  padding: 2px 5px;
+  border-bottom: 1px solid goldenrod;
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-weight: normal;
+}
+.dropDownItem:hover {
+  background-color: goldenrod;
+}
+
+.carrers {
+  visibility: hidden;
+}
+
+@media (max-width: 1000px) {
+  .navbarContainer {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .navbarLinks {
+    flex-direction: column;
+    flex-grow: 1;
+    flex-basis: 100%;
+    gap: 12px;
+    margin-top: 10px;
+  }
+
+  .navbarLinks a {
+    margin-left: unset;
+  }
+
+  .navbar a button {
+    display: none;
+  }
+
+  .carrers {
+    display: none;
+  }
+
+  .toggler {
+    display: block;
+    align-self: flex-end;
+  }
+
+  .navbarLinks button {
+    display: block !important;
+  }
+
+  .dropDown {
+    margin-left: unset;
+  }
+
+  .collapsed {
+    display: none;
+  }
+}

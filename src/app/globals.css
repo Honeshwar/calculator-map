@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
@@ -29,5 +29,136 @@ body {
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+} */
+/* Loading Status Animation */
+.loading-container {
+  display: flex;
+  overflow: hidden;
+  margin: auto !important;
+}
+.loading-spinner {
+  opacity: 0.8;
+  width: 10em;
+  height: 10em;
+  border-top: 1em solid #f69207;
+  border-right: 1em solid #c8c8c8;
+  border-bottom: 1em solid #f69207;
+  border-left: 1em solid #c8c8c8;
+  animation: spinner 1s linear infinite;
+  border-radius: 50%;
+  margin: auto !important;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* tooltip of map */
+.deck-tooltip {
+  background-color: white !important;
+  padding: 0 !important;
+  color: black !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  border-radius: 7px !important;
+}
+
+/* voter share range slider */
+.slider-container {
+  position: relative;
+  width: 100%;
+}
+
+.slider {
+  -webkit-appearance: none; /* Remove default styles */
+  width: 100%; /* Set width */
+  height: 7px; /* Set height */
+  background: #ff9602; /* Set background color */
+  outline: none; /* Remove outline */
+  opacity: 0.7; /* Set transparency */
+  -webkit-transition: 0.2s; /* Set transition for smoother sliding */
+  transition: opacity 0.2s;
+  background: none;
+  /* linear-gradient(to right, #e9c99d, #ff9602, #ff9602, #ff9602); */
+
+  overflow: hidden;
+  /* width: 80px; */
+  -webkit-appearance: none;
+  background-color: #cccccc;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Remove default styles */
+  appearance: none;
+  width: 20px; /* Set thumb width */
+  height: 20px; /* Set thumb height */
+  background: #c67503; /* Set thumb color */
+  cursor: pointer; /* Set cursor */
+  border-radius: 50%; /* Make thumb circular */
+  position: relative;
+  z-index: 2;
+
+  width: 13px;
+  -webkit-appearance: none;
+  height: 13px;
+  cursor: ew-resize;
+  background: #ce7a04;
+  box-shadow: -125px 0 0 120px #ff9500;
+}
+/* .slider::before {
+  content: "";
+  width: 1px;
+  height: 100%;
+  position: absolute;
+  top: 0%;
+  left: calc(60% + 2.8%);
+
+  border-left: 1px dashed gray;
+  z-index: 11;
+} */
+.slider::-webkit-slider-runnable-track {
+  /* height: 10px; */
+  -webkit-appearance: none;
+  color: #13bba4;
+  /* margin-top: -1px; */
+}
+
+/** FF*/
+i.slider::-moz-range-progress {
+  background-color: #ff9602;
+}
+i.slider::-moz-range-track {
+  background-color: #ff9602;
+}
+/* IE*/
+i.slider::-ms-fill-lower {
+  background-color: #ff9602;
+}
+i.slider::-ms-fill-upper {
+  background-color: #ff9602;
+}
+
+.value-display {
+  position: absolute;
+  top: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14px;
+  /* color: #000; */
+}
+
+/* pointer-cursor-animation */
+.pointer-cursor-animation {
+  animation: cursor 1s 0s ease-in-out infinite alternate;
+}
+@keyframes cursor {
+  0% {
+    transform: rotate(-45deg);
+  }
+  100% {
+    transform: rotate(45deg);
   }
 }

@@ -1,0 +1,345 @@
+{
+  "Delhi": {
+    "North East Delhi": [
+      "BURARI",
+      "TIMARPUR",
+      "SEEMAPURI",
+      "ROHTAS NAGAR",
+      "SEELAMPUR",
+      "GHONDA",
+      "BABARPUR",
+      "GOKALPUR",
+      "MUSTAFABAD",
+      "KARAWAL NAGAR"
+    ],
+    "East Delhi": [
+      "JANGPURA",
+      "OKHLA",
+      "TRILOKPURI",
+      "KONDLI",
+      "PATPARGANJ",
+      "LAXMI NAGAR",
+      "VISHWAS NAGAR",
+      "KRISHNA NAGAR",
+      "GANDHI NAGAR",
+      "SHAHDARA"
+    ],
+    "New Delhi": [
+      "KAROL BAGH",
+      "PATEL NAGAR",
+      "MOTI NAGAR",
+      "DELHI CANTT",
+      " RAHINDER NAGAR",
+      "NEW DELHI",
+      "KASTURBA NAGAR",
+      "MALVIYA NAGAR",
+      "R K PURAM"
+    ],
+    "North West Delhi": [
+      "NARELA",
+      "BADII",
+      "RITHALA",
+      "BAWANA",
+      "MUNDKA",
+      "KIRARI",
+      "SULTAN",
+      "PUR MAJRA",
+      "NANGLOI JAT",
+      "MANGOL PURI",
+      "ROHINI"
+    ],
+    "West Delhi": [
+      "MADIPUR",
+      "RAJOURI GARDEN",
+      "HARI NAGAR",
+      "TILAK NAGAR",
+      "JANAKPURI",
+      "VIKASPURI",
+      "UTTAM NAGAR",
+      "DWARKA",
+      "MATIALA"
+    ],
+    "South Delhi": [
+      "BIJWASAN",
+      "PALAM",
+      "MEHRAULI",
+      "CHHATARPUR",
+      "DEOLI",
+      "AMBEDKAR NAGAR",
+      "SANGAM VIHAR",
+      "KALKAJI",
+      "TUGHLAKABAD",
+      "BADARPUR"
+    ],
+    "Chandini Chowk": [
+      "ADARSH NAGAR",
+      "SHALIMAR BAGH",
+      "SHAKUR BASTI",
+      "TRI NAGAR",
+      "WAZIRPUR",
+      "MODEL TOWN",
+      "SADAR BAZAR",
+      "CHANDINI CHOWK",
+      "MATIA MAHAL",
+      "BALLIMARAN"
+    ]
+  },
+  "West Bengal": {
+    "North Bengal": [
+      "COOCHBEHAR",
+      "ALIPURDUAR",
+      "DARJILING",
+      "JALPAIGURI",
+      "KALIMPONG"
+    ],
+    "Neck Of Bengal": [
+      "UTTAR DINAJPUR",
+      "DAKSHIN DINAJPUR",
+      "MALDA",
+      "MURSHIDABAD"
+    ],
+    "Central Bengal": ["BIRBHUM", "PURBA BARDHAMAN", "HOOGHLY", "HOWRAH"],
+    "Nadia": ["NADIA"],
+    "South Bengal": [
+      "KOLKATA SOUTH",
+      "NORTH 24-PARGANAS",
+      "PURBA MEDINIPUR",
+      "SOUTH 24-PARGANAS"
+    ]
+  },
+  "Uttar Pradesh": {
+    "Western UP": [
+      "MEERUT",
+      "BULANDSHAHR",
+      "GAUTAM BUDDHA NAGAR",
+      "GHAZIABAD",
+      "HAPUR",
+      "BAGHPAT",
+      "SAHARANPUR",
+      "MUZAFFARNAGAR",
+      "SHAMLI",
+      "MORADABAD",
+      "BIJNOR",
+      "RAMPUR",
+      "AMROHA",
+      "SAMBHAL",
+      "BAREILLY",
+      "BUDAUN",
+      "AGRA",
+      "FIROZABAD",
+      "JYOTIBA PHULE NAGAR",
+      "ALIGARH",
+      "ETAH",
+      "MATHURA",
+      "HATHRAS"
+    ],
+    "Rohilkhand": [
+      "PILIBHIT",
+      "SHAHJAHANPUR",
+      "MAINPURI",
+      "AURAIYA",
+      "FARRUKHABAD",
+      "HARDOI",
+      "ETAWAH",
+      "KANNAUJ",
+      "KANPUR DEHAT"
+    ],
+    "Awadh": [
+      "AMBEDKAR NAGAR",
+      "BAHRAICH",
+      "BALRAMPUR",
+      "BARABANKI",
+      "FAIZABAD",
+      "GONDA",
+      "LAKHIMPUR",
+      "KHERI",
+      "LUCKNOW",
+      "PRATAPGARH",
+      "RAEBARELI",
+      "AMETHI",
+      "SHRAVASTI",
+      "SITAPUR",
+      "SULTANPUR",
+      "UNNAO",
+      "FATEHPUR",
+      "KAUSHAMBI",
+      "ALLAHABAD",
+      "KANPUR NAGAR"
+    ],
+    "Purvanchal": [
+      "AZAMGARH",
+      "BALLIA",
+      "BASTI",
+      "CHANDAULI",
+      "DEORIA",
+      "GHAZIPUR",
+      "GORAKHPUR",
+      "JAUNPUR",
+      "KUSHINAGAR",
+      "MAHARAJGANJ",
+      "MAU",
+      "MIRZAPUR",
+      "SANT KABIR NAGAR",
+      "SANT RAVIDAS NAGAR",
+      "BHADOHI",
+      "SIDDHARTHNAGAR",
+      "SONBHADRA",
+      "VARANASI"
+    ],
+    "Bundelkhand": [
+      "JHANSI",
+      "JALAUN",
+      "LALITPUR",
+      "MAHOBA",
+      "HAMIRPUR",
+      "BANDA",
+      "CHITRAKOOT"
+    ],
+    "Terai": [
+      "PILIBHIT",
+      "LAKHIMPUR",
+      "KHERI",
+      "BAHRAICH",
+      "SHRAVASTI",
+      "BALRAMPUR",
+      "SIDDHARTHNAGAR",
+      "MAHARAJGANJ"
+    ]
+  },
+  "Punjab": {
+    "Majha": ["AMRITSAR", "GURDASPUR", "TARN TARAN", "PATHANKOT"],
+    "Doaba": ["HOSHIARPUR", "KAPURTHALA", "JALANDHAR", "NAWANSHAHR"],
+    "Malwa": [
+      "MOGA",
+      "FIROZPUR",
+      "FAZIKA",
+      "MUKTSAR",
+      "FARIDKOT",
+      "BATHINDA",
+      "MANSA",
+      "SANGRUR",
+      "PATIALA",
+      "BARNALA",
+      "RUPNAGAR",
+      "LUDHIANA",
+      "FATEHGARH SAHIB"
+    ]
+  },
+  "Goa": {
+    "North Goa": ["NORTH GOA"],
+    "South Goa": ["SOUTH GOA"]
+  },
+  "Uttarakhand": {
+    "Garhwal": [
+      "CHAMOLI",
+      "DEHRADUN",
+      "HARIDWAR",
+      "PAURI",
+      "TEHRI",
+      "GARHWAL",
+      "RUDRAPRAYAG",
+      "TEHRI GARHWAL",
+      "UTTARKASHI"
+    ],
+    "Kumaon": [
+      "ALMORA",
+      "BAGESHWAR",
+      "CHAMPAWAT",
+      "PITHORAGARH",
+      "NAINITAL",
+      "UDHAM SINGH NAGAR"
+    ]
+  },
+  "Karnataka": {
+    "Bombay Karnataka": [
+      "BELGAUM",
+      "BAGALKOT *",
+      "BIJAPUR",
+      "GADAG *",
+      "DHARWAD",
+      "HAVERI *"
+    ],
+    "Hyderabad Karnataka": [
+      "BIDAR",
+      "RAICHUR",
+      "KOPPAL *",
+      "BELLARY",
+      "GULBARGA"
+    ],
+    "Coastal Karnataka": [
+      "UTTARA KANNADA",
+      "DAKSHINA KANNADA",
+      "UDUPI *"
+    ],
+    "Central Karnataka": [
+      "CHITRADURGA",
+      "DAVANGERE*",
+      "SHIMOGA",
+      "CHIKMAGALUR",
+      "KODAGU"
+    ],
+    "Old Mysore": [
+      "TUMKUR",
+      "KOLAR",
+      "BANGALORE RURAL",
+      "MANDYA",
+      "HASSAN",
+      "MYSORE",
+      "CHAMRAJNAGAR*"
+    ],
+    "Bangalore City": [
+      "BANGALORE"
+    ]
+  },
+  "Manipur": {
+    "Inner Manipur": [
+      "BISHNUPUR",
+      "IMPHAL WEST",
+      "IMPHAL EAST",
+      "THOUBAL",
+      "KAKCHING"
+    ],
+    "Outer Manipur": [
+      "SENAPATI",
+      "UKHRUL",
+      "CHANDEL",
+      "CHURACHANDPUR",
+      "TAMENGLONG",
+      "JIRIBAM",
+      "KANGPOKPI",
+      "TENGNOUPAL",
+      "KAMJONG",
+      "NONEY",
+      "PHERZAWL"
+    ]
+  },
+  "Rajasthan" : {
+    "Hadodi" : ["BUNDI", "BARAN *", "JHALAWAR", "KOTA"],
+    "Marwad" : ["JAISALMER", "BIKANER", "BARMER", "JALOR", "JODHPUR", "NAGAUR", "PALI", "SIROHI"],
+    "Mewar"  : ["BHILWARA", "CHITTAURGARH", "RAJSAMAND *", "UDAIPUR"],
+    "Shekhawati" : ["JHUNJHUNUN", "SIKAR", "CHURU"],
+    "Jaipur" : ["JAIPUR","DAUSA *", "SAWAI MADHOPUR", "TONK", "KARAULI *", "BHARATPUR", "DHAULPUR", "ALWAR", "AJMER"],
+    "Green Belt" : ["GANGANAGAR", "HANUMANGARH *"],
+    "South Adivasi Belt" : ["DUNGARPUR", "BANSWARA", "PRATAPGARH"]
+  },
+  "Madhya Pradesh" : {
+    "Baghelkhand" : ["REWA", "SATNA", "SHAHDOL", "ANUPPUR", "SIDHI", "SINGRAULI"],
+    "Bhopal"      : ["BHOPAL", "RAISEN", "VIDISHA", "SAGAR", "DAMOH", "HOSHANGABAD", "HARDA", "BETUL"],
+    "Chambal"     : ["MORENA", "BHIND", "SHEOPUR"],
+    "Gwalior"     : ["GWALIOR", "GUNA", "ASHOK NAGAR", "SHIVPURI", "DATIA"],
+    "Bundelkhand" : ["TIKAMGARH", "CHHATARPUR", "PANNA"],
+    "Mahakaushal" : ["JABALPUR", "KATNI", "UMARIA", "NARSIMHAPUR", "MANDLA", "DINDORI", "SEONI", "CHHINDWARA", "BALAGHAT"],
+    "Nimar"       : ["BARWANI", "BURHANPUR", "EAST NIMAR", "WEST NIMAR"],
+    "Malwa"       : ["DEWAS", "DHAR", "INDORE", "JHABUA", "MANDSAUR", "NEEMUCH", "RAJGARH", "RATLAM", "SHAJAPUR", "UJJAIN", "SEHORE"]
+  },
+  "Chhattisgarh" : {
+    "Northern Hills" : ["BILASPUR", "KORBA", "JANJGIR - CHAMPA", "RAIGARH", "KORIYA", "JASHPUR", "SURGUJA"],
+    "Central Plains" : ["KAWARDHA", "DURG", "RAJNANDGAON", "MAHASAMUND", "RAIPUR", "DHAMTARI"],
+    "Bastar"         : ["KANKER", "BASTER", "DANTEWADA"]
+  },
+  "Telangana" : {
+    "North Zone"   : ["ADILABAD", "KARIMNAGAR", "NIZAMABAD"],
+    "Central Zone" : ["KHAMMAM", "WARANGAL", "MEDAK"],
+    "South Zone"   : ["NALGONDA", "RANGAREDDI", "HYDERABAD", "MAHBUBNAGAR"]
+  }
+}
