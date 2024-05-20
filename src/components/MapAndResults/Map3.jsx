@@ -429,27 +429,25 @@ export default function Map3() {
 
           let deltaHtml = ``;
           if (details.delta < 0) {
-            deltaHtml = `<span class="px-2 text-[10px] text-red-500 flex items-baseline gap-1 w-10">
+            deltaHtml = `<span class="px-2 text-[10px] text-red-500 flex items-center gap-1 w-20 ">
             (<svg
               fill="red"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 320 512"
               width="10"
               height="10"
-              className="w-5 h-5"
             >
               <path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z" />
-            </svg> ${details.delta?.toFixed(2) || 0}%)
+            </svg> ${Math.abs(details.delta?.toFixed(2) || 0)}%)
           </span>`;
           } else {
-            deltaHtml = `<span class="px-2 text-[10px] text-green-500 flex items-baseline gap-1 w-10">
+            deltaHtml = `<span class="px-2 text-[10px] text-green-500 flex items-center gap-1 w-20 ">
             (<svg
               fill="green"
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 320 512"
               width="10"
               height="10"
-              className="w-5 h-5"
             >
               <path d="M182.6 137.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z" />
             </svg>${details.delta?.toFixed(2) || 0}%)
@@ -458,13 +456,13 @@ export default function Map3() {
 
           modeled =
             modeled +
-            ` <p class="flex gap-1  ">
+            ` <p class="flex gap-0  ">
              
-            <span class="text-[gray] text-[10px]   w-10  ">${new Intl.NumberFormat(
+            <span class="text-[gray] text-[10px]   min-w-[55px]  ">${new Intl.NumberFormat(
               "en-IN"
             ).format(details.revisedVotesCount?.toFixed(0))}</span>
            
-            <span class="text-[gray] text-[10px]  w-13  flex"> <span class="px-2">|</span> ${details.revisedVoteShare?.toFixed(
+            <span class="text-[gray] text-[10px]  min-w-14   flex"> <span class="pr-[5px]">|</span> ${details.revisedVoteShare?.toFixed(
               2
             )}%</span>
             
@@ -512,7 +510,7 @@ export default function Map3() {
             Modelled Vote
             <span class="px-2"></span>
           </span>
-        <div class="flex flex-col gap-[7px] border-l-[1px] border-gray-400 pl-2  ">
+        <div class="flex flex-col gap-[7px] border-l-[1px] border-gray-400 pl-2 ">
         ${modeled}</div>
         </div>
           </div>
