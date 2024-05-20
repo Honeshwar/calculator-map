@@ -313,14 +313,14 @@ export default function Map3() {
     // console.log("obj", obj);
     let rgba = [];
     if (obj) {
-      let party = "",
-        maxVotes = 0;
-      for (let details of obj.candidates) {
-        if (details.votesCount > maxVotes) {
-          maxVotes = details.votesCount;
-          party = details.party;
-        }
-      }
+      let party = obj.revisedWinner;
+      // maxVotes = 0;
+      // for (let details of obj.candidates) {
+      //   if (details.votesCount > maxVotes) {
+      //     maxVotes = details.votesCount;
+      //     party = details.party;
+      //   }
+      // }
       ////console.log("party", party, maxVotes);
       if (PARTY_ALLIANCE_COLORS[party])
         rgba = hexRgb(PARTY_ALLIANCE_COLORS[party], {
