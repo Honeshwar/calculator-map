@@ -1,12 +1,9 @@
 "use client";
-
 import DeckGL from "@deck.gl/react";
-
 import { useState, useRef, useEffect } from "react";
 import ReactMapGL, { NavigationControl } from "react-map-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { GeoJsonLayer } from "@deck.gl/layers";
-import { useProvideContext } from "../../context/FilterContext";
 import {
   DEFAULT_DISTRICT_LINE_COLOR_GENERAL,
   STATE_COLORS,
@@ -20,8 +17,18 @@ import { useFilterContextValue } from "../../context/FilterContext";
 import hexRgb from "hex-rgb";
 import Loading from "../Loading";
 export default function Map3() {
-  const windowWidth = window.innerWidth;
-
+  const windowWidth = typeof window !== "undefined" ? window.innerWidth : 500;
+  // const [windowWidth, setWindowWidth] = useState(500);
+  // useEffect(() => {
+  //   if (typeof window !== "undefined") {
+  //     setWindowWidth(window.innerWidth);
+  //     setViewport({
+  //       longitude: windowWidth < 640 ? 78.9629 : 78.9629,
+  //       latitude: windowWidth < 640 ? 20.5937 : 20.5937,
+  //       zoom: windowWidth < 640 ? 2.5 : 3.5,
+  //     });
+  //   }
+  // }, []);
   //   const mapRef = useRef < any > null;
   const [viewport, setViewport] = useState({
     longitude: windowWidth < 640 ? 78.9629 : 78.9629,

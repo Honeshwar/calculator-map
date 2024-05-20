@@ -9,7 +9,6 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@nextui-org/react": "^2.3.6",
     "clsx": "^2.1.1",
     "deck.gl": "^9.0.14",
     "hex-rgb": "^5.0.0",

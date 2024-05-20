@@ -38,22 +38,22 @@ function FilterContextProvider({ children }) {
     ) {
       Promise.all([
         fetch(`data/geojson/states.geojson`),
-        fetch(`data/geojson/assembly.geojson`),
+        // fetch(`data/geojson/assembly.geojson`),
         fetch(`data/geojson/parliament.geojson`),
         // fetch(`https://dhruvresearch.com/api/v2/result/map?election_type=LS`),
         fetch(
           `https://dhruvresearch.com/api/v2/analysis/result?party=BJP&delta=0&delta_type=positive&state=Delhi&type=nation`
         ),
       ])
-        .then(async ([res1, res2, res3, res4]) => {
+        .then(async ([res1, res3, res4]) => {
           const a = await res1.json();
-          const b = await res2.json();
+          // const b = await res2.json();
           const c = await res3.json();
           const d = await res4.json();
           // console.log("geojson", a, c, d);
-          console.log("geojson", a, b, c);
+          console.log("geojson", a, c);
           setStateGeojson(a);
-          setACGeojson(b);
+          // setACGeojson(b);
           setPCGeojson(c);
           setMapResult(d.data);
           // setLoading(false);
