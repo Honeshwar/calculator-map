@@ -69,25 +69,25 @@ export default function ElectionYearDropdown() {
     setShowPartyDropDown,
   } = useFilterContextValue();
   return (
-    <fieldset className="cursor-pointer border-[1.2px] border-[lightgray] rounded-md w-[250px]   py-1 pb-[8px] relative">
+    <fieldset className=" border-[1.2px] border-[lightgray] rounded-md w-[250px]   py-1 pb-[8px] relative">
       <legend className="text-[12px] text-gray-500 mx-2 px-1 relative">
         Election Year <span className="text-[red]">*</span>
       </legend>
       <div
         className="w-[95%] px-2 text-gray-500 relative flex items-center"
-        onClick={() => {
-          //reconcilation and batching
-          setShowElectionYearDropDown((prev) => !prev);
-          // reset all other dropdowns
-          setShowStateDropDown(false);
-          setShowPCDropDown(false);
-          setShowPartyDropDown(false);
-        }}
+        // onClick={() => {
+        //   //reconcilation and batching
+        //   setShowElectionYearDropDown((prev) => !prev);
+        //   // reset all other dropdowns
+        //   setShowStateDropDown(false);
+        //   setShowPCDropDown(false);
+        //   setShowPartyDropDown(false);
+        // }}
       >
         <span id="select-box-3 " className="text-sm text-black font-semibold">
           {selected_election_year + " LS"}
         </span>
-        <span className="text-[gray] absolute right-[0px]">
+        {/* <span className="text-[gray] absolute right-[0px]">
           <svg
             className="w-4"
             version="1.0"
@@ -106,7 +106,7 @@ export default function ElectionYearDropdown() {
               />
             </g>
           </svg>
-        </span>
+        </span> */}
       </div>
 
       {/* <!-- drop down --> */}

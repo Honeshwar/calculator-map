@@ -17,6 +17,7 @@ function FilterContextProvider({ children }) {
   const [selected_party, setSelected_party] = useState("BJP");
   const [showPartyDropDown, setShowPartyDropDown] = useState(false);
 
+  const [default_delta_value, setDefault_delta_value] = useState(-1);
   const [selected_Voter_Percentage, setSelected_Voter_Percentage] = useState({
     delta: 0,
     delta_type: "positive",
@@ -175,6 +176,8 @@ function FilterContextProvider({ children }) {
         setMapResult,
         selected_Voter_Percentage,
         setSelected_Voter_Percentage,
+        default_delta_value,
+        setDefault_delta_value,
 
         setCloseAnimation,
       }}

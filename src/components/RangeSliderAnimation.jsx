@@ -7,9 +7,13 @@ export default function RangeSliderAnimation({
   setCloseAnimation,
 }) {
   useEffect(() => {
-    document.body.style.overflow = "hidden";
+    document.body.style.overflow = "auto";
+    const timeout = setTimeout(() => {
+      if (closeAnimation === false) setCloseAnimation(true);
+    }, 3000);
 
     return () => {
+      clearTimeout(timeout);
       document.body.style.overflow = "auto";
     };
   });

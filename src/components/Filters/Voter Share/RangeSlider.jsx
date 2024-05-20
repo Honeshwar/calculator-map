@@ -8,7 +8,7 @@ function RangeSlider() {
   const defaultRangeRef = useRef(null);
   const rangeRef = useRef(null);
   const deltaRef = useRef(null);
-  const [default_value, setDefault_value] = useState(-1);
+
   // const [loading, setLoading] = useState(false);
   const {
     selected_party,
@@ -17,6 +17,8 @@ function RangeSlider() {
     electionType,
     selected_state,
     setCloseAnimation,
+    default_delta_value,
+    setDefault_delta_value,
   } = useFilterContextValue();
 
   useEffect(() => {
@@ -59,7 +61,8 @@ function RangeSlider() {
               : "negative",
         });
         setValue(defaultRange);
-        setDefault_value(defaultRange);
+        setDefault_delta_value(defaultRange);
+        if (deltaRef.current) deltaRef.current.innerText = "0%";
         // setLoading(false);
       } catch (error) {
         console.log("error in fetch parties", error);
@@ -89,8 +92,10 @@ function RangeSlider() {
     //   deltaRef.current.innerText = delta.toFixed(0) + "%";
     // }
 
-    const delta = v.delta - default_value;
-    if (delta >= 0) {
+    const delta = v.delta - default_delta_value;
+    if (delta === 0) {
+      deltaRef.current.innerText = "0%";
+    } else if (delta > 0) {
       deltaRef.current.innerText = "+" + delta.toFixed(0) + "%";
     } else {
       deltaRef.current.innerText = delta.toFixed(0) + "%";
@@ -100,7 +105,7 @@ function RangeSlider() {
   const handleChange = (event, zeroClick = false) => {
     const value = zeroClick ? Number(event) : Number(event.target.value);
 
-    if (value !== default_value) {
+    if (value !== default_delta_value) {
       rangeRef.current.innerText = value + "%";
 
       if (value < selected_Voter_Percentage.delta) {
@@ -136,182 +141,194 @@ function RangeSlider() {
 
   return (
     <>
-      {default_value === -1 ? (
+      {default_delta_value === -1 ? (
         <Loading />
       ) : (
-        <div className="w-full flex gap-3 items-center">
-          <div className="slider-container px-3  py-[10px] border-2 rounded-full flex justify-center items-center">
-            <input
-              ref={inputRef}
-              id="range-slider"
-              type="range"
-              min="0"
-              max="100"
-              defaultValue={value}
-              onChange={handleChange}
-              className="slider range-slider rounded-full py-[7px] "
-            />
+        <>
+          <div className="w-full flex gap-3 items-center">
+            <div className="slider-container px-3  py-[10px] border-2 rounded-full flex justify-center items-center">
+              <input
+                ref={inputRef}
+                id="range-slider"
+                type="range"
+                min="0"
+                max="100"
+                defaultValue={value}
+                onChange={handleChange}
+                className="slider range-slider rounded-full py-[7px] "
+              />
 
-            {/* value change */}
-            <span
-              ref={rangeRef}
-              className={"value-display "}
-              style={{
-                left:
-                  value <= 20
-                    ? value + 10 + `%`
-                    : value <= 40
-                    ? value + 7 + `%`
-                    : value <= 60
-                    ? value + 3 + `%`
-                    : value <= 80
-                    ? value - 2 + `%`
-                    : value - 5 + `%`,
-                color: "gray",
-                top: "38px",
-                paddingInline: "20px",
-              }}
-            >
-              {value === default_value ? "" : value + "%"}
-            </span>
+              {/* value change */}
+              <span
+                ref={rangeRef}
+                className={"value-display "}
+                style={{
+                  left:
+                    value <= 20
+                      ? value + 10 + `%`
+                      : value <= 40
+                      ? value + 7 + `%`
+                      : value <= 60
+                      ? value + 3 + `%`
+                      : value <= 80
+                      ? value - 2 + `%`
+                      : value - 5 + `%`,
+                  color: "gray",
+                  top: "38px",
+                  paddingInline: "20px",
+                }}
+              >
+                {value === default_delta_value ? "" : value + "%"}
+              </span>
 
-            {/* dotted line and default value change*/}
-            <span
-              onClick={() => handleChange(default_value, true)}
-              className="border-r border-dashed border-gray-400  absolute  h-full w-[1px] cursor-pointer z-[-1]"
-              style={{
-                left:
-                  default_value === 0
-                    ? default_value + 6 + `%`
-                    : default_value <= 5
-                    ? default_value + 8 + `%`
-                    : default_value <= 10
-                    ? default_value + 7 + `%`
-                    : default_value <= 15
-                    ? default_value + 6 + `%`
-                    : default_value <= 20
-                    ? default_value + 5 + `%`
-                    : default_value <= 25
-                    ? default_value + 4.5 + `%`
-                    : default_value <= 30
-                    ? default_value + 3.5 + `%`
-                    : default_value <= 35
-                    ? default_value + 2.9 + `%`
-                    : default_value <= 40
-                    ? default_value + 1.9 + `%`
-                    : default_value <= 45
-                    ? default_value + 1.3 + `%`
-                    : default_value <= 50
-                    ? default_value + 0.5 + `%`
-                    : default_value <= 55
-                    ? default_value - 0.5 + `%`
-                    : default_value <= 60
-                    ? default_value - 1.2 + `%`
-                    : default_value <= 65
-                    ? default_value - 2.5 + `%`
-                    : default_value <= 70
-                    ? default_value - 3.3 + `%`
-                    : default_value <= 75
-                    ? default_value - 4.1 + `%`
-                    : default_value <= 80
-                    ? default_value - 5.2 + `%`
-                    : default_value <= 85
-                    ? default_value - 5.8 + `%`
-                    : default_value <= 90
-                    ? default_value - 6.3 + `%`
-                    : default_value <= 95
-                    ? default_value - 7.4 + `%`
-                    : default_value <= 99
-                    ? default_value - 8 + `%`
-                    : default_value - 6 + `%`,
-              }}
-            ></span>
-            <span
-              onClick={() => handleChange(default_value, true)}
-              ref={defaultRangeRef}
-              className={"value-display  cursor-pointer"}
-              style={{
-                left:
-                  default_value <= 5
-                    ? default_value + 8 + `%`
-                    : default_value <= 10
-                    ? default_value + 7 + `%`
-                    : default_value <= 15
-                    ? default_value + 6 + `%`
-                    : default_value <= 20
-                    ? default_value + 5 + `%`
-                    : default_value <= 25
-                    ? default_value + 4.5 + `%`
-                    : default_value <= 30
-                    ? default_value + 3.5 + `%`
-                    : default_value <= 35
-                    ? default_value + 2.9 + `%`
-                    : default_value <= 40
-                    ? default_value + 1.9 + `%`
-                    : default_value <= 45
-                    ? default_value + 1.3 + `%`
-                    : default_value <= 50
-                    ? default_value + 0.5 + `%`
-                    : default_value <= 55
-                    ? default_value - 0.5 + `%`
-                    : default_value <= 60
-                    ? default_value - 1.5 + `%`
-                    : default_value <= 65
-                    ? default_value - 2.5 + `%`
-                    : default_value <= 70
-                    ? default_value - 3.3 + `%`
-                    : default_value <= 75
-                    ? default_value - 4.3 + `%`
-                    : default_value <= 80
-                    ? default_value - 5.2 + `%`
-                    : default_value <= 85
-                    ? default_value - 5.8 + `%`
-                    : default_value <= 90
-                    ? default_value - 6.3 + `%`
-                    : default_value <= 95
-                    ? default_value - 7.4 + `%`
-                    : default_value - 8 + `%`,
-                color: "gray",
-                top: "60px",
-              }}
-            >
-              {default_value}%
-            </span>
+              {/* dotted line and default value change*/}
+              <span
+                onClick={() => handleChange(default_delta_value, true)}
+                className="border-r border-dashed border-gray-400  absolute  h-full w-[1px] cursor-pointer z-[0]"
+                style={{
+                  left:
+                    default_delta_value === 0
+                      ? default_delta_value + 6 + `%`
+                      : default_delta_value <= 5
+                      ? default_delta_value + 8 + `%`
+                      : default_delta_value <= 10
+                      ? default_delta_value + 7 + `%`
+                      : default_delta_value <= 15
+                      ? default_delta_value + 6 + `%`
+                      : default_delta_value <= 20
+                      ? default_delta_value + 5 + `%`
+                      : default_delta_value <= 25
+                      ? default_delta_value + 4.5 + `%`
+                      : default_delta_value <= 30
+                      ? default_delta_value + 3.5 + `%`
+                      : default_delta_value <= 35
+                      ? default_delta_value + 2.9 + `%`
+                      : default_delta_value <= 40
+                      ? default_delta_value + 1.9 + `%`
+                      : default_delta_value <= 45
+                      ? default_delta_value + 1.3 + `%`
+                      : default_delta_value <= 50
+                      ? default_delta_value + 0.5 + `%`
+                      : default_delta_value <= 55
+                      ? default_delta_value - 0.5 + `%`
+                      : default_delta_value <= 60
+                      ? default_delta_value - 1.2 + `%`
+                      : default_delta_value <= 65
+                      ? default_delta_value - 2.5 + `%`
+                      : default_delta_value <= 70
+                      ? default_delta_value - 3.3 + `%`
+                      : default_delta_value <= 75
+                      ? default_delta_value - 4.1 + `%`
+                      : default_delta_value <= 80
+                      ? default_delta_value - 5.2 + `%`
+                      : default_delta_value <= 85
+                      ? default_delta_value - 5.8 + `%`
+                      : default_delta_value <= 90
+                      ? default_delta_value - 6.3 + `%`
+                      : default_delta_value <= 95
+                      ? default_delta_value - 7.4 + `%`
+                      : default_delta_value <= 99
+                      ? default_delta_value - 8 + `%`
+                      : default_delta_value - 6 + `%`,
+                }}
+              ></span>
+              <span
+                onClick={() => handleChange(default_delta_value, true)}
+                ref={defaultRangeRef}
+                className={"value-display  cursor-pointer"}
+                style={{
+                  left:
+                    default_delta_value <= 5
+                      ? default_delta_value + 8 + `%`
+                      : default_delta_value <= 10
+                      ? default_delta_value + 7 + `%`
+                      : default_delta_value <= 15
+                      ? default_delta_value + 6 + `%`
+                      : default_delta_value <= 20
+                      ? default_delta_value + 5 + `%`
+                      : default_delta_value <= 25
+                      ? default_delta_value + 4.5 + `%`
+                      : default_delta_value <= 30
+                      ? default_delta_value + 3.5 + `%`
+                      : default_delta_value <= 35
+                      ? default_delta_value + 2.9 + `%`
+                      : default_delta_value <= 40
+                      ? default_delta_value + 1.9 + `%`
+                      : default_delta_value <= 45
+                      ? default_delta_value + 1.3 + `%`
+                      : default_delta_value <= 50
+                      ? default_delta_value + 0.5 + `%`
+                      : default_delta_value <= 55
+                      ? default_delta_value - 0.5 + `%`
+                      : default_delta_value <= 60
+                      ? default_delta_value - 1.5 + `%`
+                      : default_delta_value <= 65
+                      ? default_delta_value - 2.5 + `%`
+                      : default_delta_value <= 70
+                      ? default_delta_value - 3.3 + `%`
+                      : default_delta_value <= 75
+                      ? default_delta_value - 4.3 + `%`
+                      : default_delta_value <= 80
+                      ? default_delta_value - 5.2 + `%`
+                      : default_delta_value <= 85
+                      ? default_delta_value - 5.8 + `%`
+                      : default_delta_value <= 90
+                      ? default_delta_value - 6.3 + `%`
+                      : default_delta_value <= 95
+                      ? default_delta_value - 7.4 + `%`
+                      : default_delta_value - 8 + `%`,
+                  color: "gray",
+                  top: "60px",
+                }}
+              >
+                {default_delta_value}%
+              </span>
 
-            {/* tooltip/delta */}
-            <span
-              onClick={() => handleChange(default_value, true)}
-              ref={deltaRef}
-              className={"absolute text-[10px] top-[calc(50%-6px)]"}
-              style={{
-                left:
-                  value <= 20
-                    ? value - 8 + `%`
-                    : value <= 40
-                    ? value - 12 + `%`
-                    : value <= 60
-                    ? value - 16 + `%`
-                    : value <= 80
-                    ? value - 21 + `%`
-                    : value - 25 + `%`,
-                color: "white",
-              }}
+              {/* tooltip/delta */}
+              <span
+                onClick={() => handleChange(default_delta_value, true)}
+                ref={deltaRef}
+                className={"absolute text-[10px] top-[calc(50%-6px)]"}
+                style={{
+                  left:
+                    value <= 20
+                      ? value - 8 + `%`
+                      : value <= 40
+                      ? value - 12 + `%`
+                      : value <= 60
+                      ? value - 16 + `%`
+                      : value <= 80
+                      ? value - 21 + `%`
+                      : value - 25 + `%`,
+                  color: "white",
+                }}
+              >
+                {/* {"-5%"} */}
+              </span>
+            </div>
+
+            {/* info icon btn */}
+            <svg
+              onClick={() => setCloseAnimation(false)}
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 192 512"
+              fill="gray"
+              className="w-5 h-5 border-2 border-gray-300 hover:border-gray-600 cursor-pointer  rounded-full p-[4px]"
             >
-              {/* {"-5%"} */}
-            </span>
+              <path d="M48 80a48 48 0 1 1 96 0A48 48 0 1 1 48 80zM0 224c0-17.7 14.3-32 32-32H96c17.7 0 32 14.3 32 32V448h32c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64V256H32c-17.7 0-32-14.3-32-32z" />
+            </svg>
           </div>
 
-          {/* info icon btn */}
-          <svg
-            onClick={() => setCloseAnimation(false)}
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 192 512"
-            fill="gray"
-            className="w-5 h-5 border-2 border-gray-300 hover:border-gray-600 cursor-pointer  rounded-full p-[4px]"
-          >
-            <path d="M48 80a48 48 0 1 1 96 0A48 48 0 1 1 48 80zM0 224c0-17.7 14.3-32 32-32H96c17.7 0 32 14.3 32 32V448h32c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64V256H32c-17.7 0-32-14.3-32-32z" />
-          </svg>
-        </div>
+          {/* reset button */}
+          <div className="w-full  flex justify-center mt-[50px]">
+            <button
+              onClick={() => handleChange(default_delta_value, true)}
+              className="text-sm bg-gray-400 rounded-md px-2 py-[5px] text-white w-full hover:bg-gray-500"
+            >
+              Reset
+            </button>
+          </div>
+        </>
       )}
     </>
   );

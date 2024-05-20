@@ -29,7 +29,8 @@ export default function Map3() {
   //     });
   //   }
   // }, []);
-  //   const mapRef = useRef < any > null;
+  const deckRef = useRef(null);
+  const containerRef = useRef();
   const [viewport, setViewport] = useState({
     longitude: windowWidth < 640 ? 78.9629 : 78.9629,
     latitude: windowWidth < 640 ? 20.5937 : 20.5937,
@@ -53,6 +54,7 @@ export default function Map3() {
     isFetchingGeojson,
     setIsFetchingGeojson,
     selected_Voter_Percentage,
+    default_delta_value,
   } = useFilterContextValue();
 
   const [select_state, setSelect_state] = useState("Select State");
@@ -123,13 +125,15 @@ export default function Map3() {
     const getMapResult = async () => {
       setLoading(true);
       const state = electionType === "STATE" ? `&state=${selected_state}` : "";
+      const deltaParam =
+        default_delta_value === selected_Voter_Percentage.delta
+          ? `&delta=0&delta_type=positive`
+          : `&delta=${selected_Voter_Percentage.delta}&delta_type=${selected_Voter_Percentage.delta_type}`;
       try {
         const res = await fetch(
           `https://dhruvresearch.com/api/v2/analysis/result?type=${
             electionType === "STATE" ? "state" : "nation"
-          }&party=${selected_party}&delta=${
-            selected_Voter_Percentage.delta
-          }&delta_type=${selected_Voter_Percentage.delta_type}${state}`
+          }${deltaParam}&party=${selected_party}${state}`
         );
         const a = await res.json();
         console.log("mapResult", a);
@@ -379,77 +383,29 @@ export default function Map3() {
         }
       }
 
-      if (results) {
+      if (results && selected_Voter_Percentage.delta === default_delta_value) {
         let voteShare = "",
-          modeled = "",
-          winningPartySeats = 0,
-          winningParty = "";
+          winningParty = results.winner;
 
         for (let details of results.candidates) {
           voteShare =
             voteShare +
             ` <p class="  flex items-center gap-1 ">
-            <span class="font-[600] text-[10px] w-10 flex justify-between items-center">
+            <span class="font-[600] text-[12px] min-w-12 flex justify-between items-center">
               ${details.party} <span class="pl-1">:</span>
             </span>
-            <span class="text-[gray] text-[10px]  w-10">${new Intl.NumberFormat(
+            <span class="text-[gray] text-[12px] min-w-12 pl-2">${new Intl.NumberFormat(
               "en-IN"
             ).format(details.votesCount)}</span>
            
-            <span class="text-[gray] text-[10px]  w-10 flex "> <span class="px-2">|</span> ${details.voteShare?.toFixed(
+            <span class="text-[gray] text-[12px]  w-14 flex pl-1"> <span class="px-2">|</span> ${details.voteShare?.toFixed(
               2
             )}%</span>
           </p>`;
-
-          let deltaHtml = ``;
-          if (details.delta < 0) {
-            deltaHtml = `<span class="px-2 text-[10px] text-red-500 flex items-center gap-1 w-20 ">
-            (<svg
-              fill="red"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 320 512"
-              width="10"
-              height="10"
-            >
-              <path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z" />
-            </svg> ${Math.abs(details.delta?.toFixed(2) || 0)}%)
-          </span>`;
-          } else {
-            deltaHtml = `<span class="px-2 text-[10px] text-green-500 flex items-center gap-1 w-20 ">
-            (<svg
-              fill="green"
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 320 512"
-              width="10"
-              height="10"
-            >
-              <path d="M182.6 137.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z" />
-            </svg>${details.delta?.toFixed(2) || 0}%)
-          </span>`;
-          }
-
-          modeled =
-            modeled +
-            ` <p class="flex gap-0  ">
-             
-            <span class="text-[gray] text-[10px]   min-w-[55px]  ">${new Intl.NumberFormat(
-              "en-IN"
-            ).format(details.revisedVotesCount?.toFixed(0))}</span>
-           
-            <span class="text-[gray] text-[10px]  min-w-14   flex"> <span class="pr-[5px]">|</span> ${details.revisedVoteShare?.toFixed(
-              2
-            )}%</span>
-            
-            ${deltaHtml}
-          </p>`;
-          if (details.votesCount > winningPartySeats) {
-            winningPartySeats = details.votesCount;
-            winningParty = details.party;
-          }
         } //results.winner
         return {
           html: `
-          <div class="bg-white p-0 pt-0 rounded-lg w-fit min-w-[250px] max-w-[fit-content] pr-2">
+          <div class=" bg-white p-0 pt-0 rounded-lg w-fit min-w-[250px] max-w-[fit-content] pr-2">
           <p class="bg-[#fff9e0] rounded-md p-2.5 pl-3 text-[14px] ">
             <span class="font-[600]">${results.state}</span>
           </p>
@@ -470,21 +426,131 @@ export default function Map3() {
 
           <div class="flex gap-0  pt-0 pb-3 px-5 w-full">
 
-          <div class="flex flex-col pt-1 w-1/2 pr-2">
+          <div class="flex flex-col pt-1 w-1/2 pr-2 gap-1 ">
             <span class="font-[600] pb-1 text-sm">
               Vote Share
               <span class=" ">:</span>
             </span>
-          <div class="pr-3 flex flex-col gap-[7px]" > ${voteShare}</div>
+          <div class=" flex flex-col gap-2" > ${voteShare}</div>
           </div>
                  
        
-          <div class="flex flex-col  pt-1  w-1/2  ">
+          
+          </div>
+
+          <div>
+            `,
+        };
+      } else if (
+        results &&
+        selected_Voter_Percentage.delta !== default_delta_value
+      ) {
+        let voteShare = "",
+          modeled = "",
+          winningParty = results.revisedWinner;
+
+        for (let details of results.candidates) {
+          voteShare =
+            voteShare +
+            ` <p class="  flex items-center gap-1 ">
+            <span class="font-[600] text-[10px] min-w-[43px] flex justify-between items-center">
+              ${details.party} <span class="pl-1">:</span>
+            </span>
+            <span class="text-[gray] text-[10px]  min-w-12 pl-1">${new Intl.NumberFormat(
+              "en-IN"
+            ).format(details.votesCount)}</span>
+           
+            <span class="text-[gray] text-[10px]  min-w-10 flex "> <span class="px-2">|</span> ${details.voteShare?.toFixed(
+              2
+            )}%</span>
+          </p>`;
+
+          let deltaHtml = ``;
+          if (details.delta < 0) {
+            deltaHtml = `<span class=" text-[10px] text-red-500 flex items-center gap-1 min-w-16 ">
+            (<svg
+              fill="red"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 320 512"
+              width="10"
+              height="10"
+            >
+              <path d="M137.4 374.6c12.5 12.5 32.8 12.5 45.3 0l128-128c9.2-9.2 11.9-22.9 6.9-34.9s-16.6-19.8-29.6-19.8L32 192c-12.9 0-24.6 7.8-29.6 19.8s-2.2 25.7 6.9 34.9l128 128z" />
+            </svg> ${Math.abs(details.delta?.toFixed(2) || 0)}%)
+          </span>`;
+          } else {
+            deltaHtml = `<span class=" text-[10px] text-green-500 flex items-center gap-1 min-w-16  ">
+            (<svg
+              fill="green"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 320 512"
+              width="10"
+              height="10"
+            >
+              <path d="M182.6 137.4c-12.5-12.5-32.8-12.5-45.3 0l-128 128c-9.2 9.2-11.9 22.9-6.9 34.9s16.6 19.8 29.6 19.8H288c12.9 0 24.6-7.8 29.6-19.8s2.2-25.7-6.9-34.9l-128-128z" />
+            </svg>${details.delta?.toFixed(2) || 0}%)
+          </span>`;
+          }
+
+          modeled =
+            modeled +
+            ` <p class="flex gap-0  ">
+             
+            <span class="text-[gray] text-[10px]   min-w-[55px]  ">${new Intl.NumberFormat(
+              "en-IN"
+            ).format(details.revisedVotesCount?.toFixed(0))}</span>
+           
+            <span class="text-[gray] text-[10px]  min-w-14   flex"> <span class="pr-2">|</span> ${details.revisedVoteShare?.toFixed(
+              2
+            )}%</span>
+            
+            ${deltaHtml}
+          </p>`;
+        } //results.winner
+        return {
+          html: `
+          <div class=" bg-white p-0 pt-0 rounded-lg w-fit min-w-[250px] max-w-[fit-content] ">
+          <p class="bg-[#fff9e0] rounded-md p-2.5 pl-3 text-[14px] ">
+            <span class="font-[600]">${results.state}</span>
+          </p>
+          <div class="flex flex-col gap-1 text-[gray] pb-3 pt-2 px-4">
+            <p class="flex gap-3 text-[13px]">
+              <span class="">Constituency</span>
+              <span class="text-black  font-[600]">
+                <span class="pr-2 ">:</span> ${results.pcName}
+              </span>
+            </p>
+            <p class="flex gap-2 text-[13px]">
+              <span class=" ">Winning Party</span>
+              <span class="text-black  font-[600]">
+                <span class="pr-2">:</span> ${winningParty}
+              </span>
+            </p>
+            <p class="flex gap-2 text-[13px]">
+              <span class=" "> Modelled Winning Party</span>
+              <span class="text-black  font-[600]">
+                <span class="pr-2">:</span> ${winningParty}
+              </span>
+            </p>
+          </div>
+
+          <div class="flex gap-0  pt-0 pb-3 px-5  ">
+
+          <div class="flex flex-col pt-1  ">
+            <span class="font-[600] pb-1 text-sm">
+              Vote Share
+              <span class=" ">:</span>
+            </span>
+          <div class="mr-4 flex flex-col gap-[7px]" > ${voteShare}</div>
+          </div>
+                 
+       
+          <div class="flex flex-col  pt-1    ">
           <span class="font-[600] pb-1 text-center text-sm">
             Modelled Vote
             <span class="px-2"></span>
           </span>
-        <div class="flex flex-col gap-[7px] border-l-[1px] border-gray-400 pl-2 ">
+        <div class="flex flex-col gap-[7px] border-l-[1px] border-gray-400  pl-4 ">
         ${modeled}</div>
         </div>
           </div>
@@ -540,23 +606,56 @@ export default function Map3() {
     }
   };
 
-  const handleWheel = (e) => {
-    e.preventDefault();
-    //console.log("wheel", e);
-    const delta = e.originalEvent.deltaY; // Get the delta value of the wheel event
-    const newZoom = delta > 0 ? viewport.zoom - 1 : viewport.zoom + 1; // Adjust zoom level
-    setViewport({
-      ...viewport,
-      zoom: newZoom,
-    });
-  };
   //console.log(layers, "layers", viewport);
+  // const tooltipRef = useRef(null);
+
+  // const getTooltip = ({ object, x, y }) => {
+  //   const tooltip = tooltipRef.current;
+  //   if (!object && !tooltip) {
+  //     tooltip.style.display = "none";
+  //     return null;
+  //   }
+
+  //   // Set tooltip content
+  //   tooltip.innerHTML = "hgdj"; //object.properties.name;
+
+  //   // Set tooltip position
+  //   let tooltipWidth = tooltip.offsetWidth;
+  //   let tooltipHeight = tooltip.offsetHeight;
+  //   const margin = 10;
+
+  //   // Adjust x to center the tooltip horizontally
+  //   x -= tooltipWidth / 2;
+
+  //   // Adjust for screen boundaries
+  //   if (x + tooltipWidth > window.innerWidth) {
+  //     x = window.innerWidth - tooltipWidth - margin;
+  //   }
+  //   if (x < margin) x = margin;
+
+  //   // Adjust y to place the cursor at the top-center of the tooltip
+  //   y -= tooltipHeight;
+
+  //   if (y + tooltipHeight > window.innerHeight) {
+  //     y = window.innerHeight - tooltipHeight - margin;
+  //   }
+  //   if (y < margin) y = margin;
+
+  //   // Set tooltip position
+  //   tooltip.style.left = `${x}px`;
+  //   tooltip.style.top = `${y}px`;
+  //   tooltip.style.display = "block"; // Show the tooltip
+
+  //   return null; // DeckGL won't render its own tooltip
+  // };
+
   return (
     <>
       {!isFetchingGeojson && !loading && layers.length > 0 ? (
         <div
+          ref={containerRef}
           id="react-map"
-          className=" w-full h-[50vh]   lg:h-auto  overflow-hidden relative"
+          className=" w-full h-[50vh]   lg:h-auto  overflow-visible relative"
         >
           <DeckGL
             initialViewState={viewport}
@@ -565,17 +664,34 @@ export default function Map3() {
             getCursor={(e) => _getCursor(e)}
             mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
             pickingRadius={5}
-            controller={true}
+            // controller={true}
             width="100%"
             height="100%"
-            style={{ backgroundColor: "lightgray" }}
-            onViewportChange={(nextViewport) => setViewport(nextViewport)}
+            style={{ backgroundColor: "#F0F0F0" }}
+            onViewportChange={(nextViewport) => {
+              setViewport(nextViewport);
+            }}
             // mapStyle="mapbox://styles/mapbox/light-v9"
             mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
             // reuseMaps
             // preventStyleDiffing={true}
             // attributionControl={false}
             // onWheel={handleWheel}
+            controller={{
+              doubleClickZoom: true, // Enable double click to zoom
+              scrollZoom: {
+                smooth: false, // Ensure smooth zooming
+                speed: 5, // Adjust speed as necessary
+                transitionDuration: 0, // Adjust duration as necessary
+              },
+              dragPan: true,
+              dragRotate: false,
+              keyboard: false,
+              touchRotate: false,
+              touchZoom: true,
+            }}
+            // onWheel={handleWheel}
+            onHover={_getTooltip}
           >
             <ReactMapGL
               // ref={mapRef}
@@ -586,13 +702,13 @@ export default function Map3() {
               // onViewportChange={(nextViewport) => setViewport(nextViewport)}
               // mapStyle="mapbox://styles/mapbox/light-v9"
               mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
-              // reuseMaps
-              // preventStyleDiffing={true}
+              reuseMaps
+              preventStyleDiffing={true}
               // attributionControl={false}
-              onWheel={handleWheel}
+              // onWheel={handleWheel}
             ></ReactMapGL>
 
-            {/* <div id="map" className="absolute z-50 bottom-0 left-0">
+            <div id="map" className="absolute z-50 bottom-0 left-0">
               <div className="mapbox-attribution-container relative flex row-reverse">
                 <div
                   className="flex justify-start"
@@ -601,34 +717,54 @@ export default function Map3() {
                   <img
                     src={`/dhruv_logo.jpg`}
                     alt="copyright newsclick dot in"
-                    className="m-1"
-                    width="15%"
-                    height="100%"
+                    className="m-1 w-24"
                   />
                 </div>
               </div>
-            </div> */}
-          </DeckGL>{" "}
+            </div>
+            <div className="absolute z-50 top-0 right-0 ">
+              <div className="mapbox-attribution-container relative flex row-reverse">
+                <div className="flex items-center px-5 pt-2  ">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 192 512"
+                    fill="gray"
+                    className="w-5 h-5 border-2 border-gray-300 hover:border-gray-600 cursor-pointer  rounded-full p-[4px]"
+                  >
+                    <path d="M48 80a48 48 0 1 1 96 0A48 48 0 1 1 48 80zM0 224c0-17.7 14.3-32 32-32H96c17.7 0 32 14.3 32 32V448h32c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H64V256H32c-17.7 0-32-14.3-32-32z" />
+                  </svg>
+                  <span className="ml-2 text-sm text-gray-500">
+                    Hover on Map to view details
+                  </span>
+                </div>
+              </div>
+            </div>
+          </DeckGL>
+          {/* zoom buttons */}
           <div
             style={{
               position: "absolute",
-              right: 10,
-              top: 10,
+              right: 20,
+              bottom: 10,
               // border: "1px solid rgba(0, 0, 0, .7)",
               display: "flex",
               flexDirection: "column",
               zIndex: 2,
 
               borderRadius: "5px",
-              boxShadow: "0 0 0 1.5px rgba(0, 0, 0, .3)",
+              // boxShadow: "0 0 0 1.5px rgba(0, 0, 0, .3)",
+              backgroundColor: "rgba(255, 255, 255, .7)",
+              paddingBlock: "5px",
             }}
           >
             <button
-              className="py-[5px] px-2 bg-white rounded-t-md"
+              className="py-[5px] px-[10px]   hover:bg-[#2c6ed8]
+              "
               onClick={handleZoomIn}
             >
               <svg
-                fill="rgba(0, 0, 0, .7)"
+                fill="#317EFC"
+                className="hover:fill-white "
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 448 512"
                 width="18px"
@@ -638,11 +774,12 @@ export default function Map3() {
               </svg>
             </button>
             <button
-              className="py-[4px] px-2 bg-white border-t-[2px] border-gray-300 border-b-[2px]"
+              className="py-[4px] px-[10px]  hover:bg-[#2c6ed8]  "
               onClick={handleZoomOut}
             >
               <svg
-                fill="rgba(0, 0, 0, .7)"
+                fill="#317EFC"
+                className="hover:fill-white "
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 448 512"
                 width="18px"
@@ -653,11 +790,12 @@ export default function Map3() {
               </svg>
             </button>
             <button
-              className="py-[5px] px-2 bg-white rounded-b-md"
+              className="py-[5px] px-[10px] hover:bg-[#2c6ed8]"
               onClick={handleResetToInitial}
             >
               <svg
-                fill="rgba(0, 0, 0, .7)"
+                fill="#317EFC"
+                className="hover:fill-white "
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 576 512"
                 width="18px"
@@ -668,6 +806,11 @@ export default function Map3() {
               </svg>
             </button>
           </div>
+
+          {/* tooltip */}
+          {/* <div className="absolute z-[1000] top-0 -left-6 bg-gray-300 text-black px-2 py-1">
+            asdfjkil
+          </div> */}
         </div>
       ) : (
         <Loading />

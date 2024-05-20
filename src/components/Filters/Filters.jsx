@@ -18,37 +18,50 @@ export default function Filters() {
     >
       <h5 className="font-[600]">Filter by</h5>
       <div className="py-4 flex flex-col gap-3">
-        <div className="w-full flex justify-between ">
+        {/* justify-between  */}
+        <div className="w-full flex  gap-3 items-center">
           <button
             onClick={() => setElectionType("INDIA")}
-            className={clsx("text-[13px] text-gray-400 p-2 px-4 ", {
-              "text-blue-500 font-[600] bg-blue-50 rounded-full":
-                electionType === "INDIA",
-            })}
+            className={clsx(
+              "text-[13px]  p-2 px-4 hover:text-blue-500 hover:font-[600] ",
+              {
+                "text-blue-500 font-[600] bg-blue-50 rounded-full":
+                  electionType === "INDIA",
+                "text-gray-400": electionType !== "INDIA",
+              }
+            )}
             type="button"
           >
             INDIA
           </button>
           <button
             onClick={() => setElectionType("STATE")}
-            className={clsx("text-[13px] text-gray-400 p-2 px-4 ", {
-              "text-blue-500 font-[600] bg-blue-50 rounded-full":
-                electionType === "STATE",
-            })}
+            className={clsx(
+              "text-[13px]  p-2 px-4 hover:text-blue-500 hover:font-[600] ",
+              {
+                "text-blue-500 font-[600] bg-blue-50 rounded-full":
+                  electionType === "STATE",
+                "text-gray-400": electionType !== "STATE",
+              }
+            )}
             type="button"
           >
             STATE
           </button>
-          <button
+          {/* <button
             // onClick={() => setElectionType("LOK SABHA")}
-            className={clsx("text-[13px] text-gray-400 p-2 px-4 ", {
-              "text-blue-500 font-[600] bg-blue-50 rounded-full":
-                electionType === "LOK SABHA",
-            })}
+            className={clsx(
+              "text-[13px]  p-2 px-4 hover:text-blue-500 hover:font-[600] ",
+              {
+                "text-blue-500 font-[600] bg-blue-50 rounded-full":
+                  electionType === "LOK SABHA",
+                "text-gray-400": electionType !== "LOK SABHA",
+              }
+            )}
             type="button"
           >
             LOK SABHA
-          </button>
+          </button> */}
         </div>
         <div className="flex flex-col gap-2">
           <ElectionYearDropdown />
