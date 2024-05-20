@@ -1,6 +1,5 @@
 "use client";
 import RangeSliderAnimation from "../components/RangeSliderAnimation";
-import { map } from "d3";
 import { createContext, useContext, useEffect, useState } from "react";
 //create context
 const context = createContext();
@@ -182,12 +181,12 @@ function FilterContextProvider({ children }) {
     >
       {children}
 
-      {/* {(!closeAnimation || closeAnimation === -1) && (
+      {(!closeAnimation || closeAnimation === -1) && (
         <RangeSliderAnimation
           closeAnimation={closeAnimation}
           setCloseAnimation={setCloseAnimation}
         />
-      )} */}
+      )}
     </context.Provider>
   );
 }
