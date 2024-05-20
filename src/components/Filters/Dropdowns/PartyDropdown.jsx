@@ -6,6 +6,7 @@ import clsx from "clsx";
 export default function PartyDropdown() {
   const {
     electionType,
+    selected_state,
     selected_party,
     setSelected_party,
     showPartyDropDown,
@@ -18,19 +19,25 @@ export default function PartyDropdown() {
 
   useEffect(() => {
     const fetchParties = async () => {
-      const type = electionType === "STATE" ? "state" : "nation";
+      // const type = electionType === "STATE" ? "state" : "nation";
+      const param =
+        electionType === "STATE"
+          ? "?type=state&state=" + selected_state
+          : "?type=nation";
       try {
         const response = await fetch(
-          process.env.NEXT_PUBLIC_API_URL + "/analysis/party?type=" + type
+          process.env.NEXT_PUBLIC_API_URL + "/analysis/party" + param
         );
         const responseData = await response.json();
+        console.log("response party", responseData);
         setParties(responseData.data);
+        setSelected_party(responseData.data[0]);
       } catch (error) {
         console.log("error in fetch parties", error);
       }
     };
     fetchParties();
-  }, [electionType]);
+  }, [electionType, selected_state]);
 
   const handleSelectParty = (name) => {
     // resetFilterToInitial(3);

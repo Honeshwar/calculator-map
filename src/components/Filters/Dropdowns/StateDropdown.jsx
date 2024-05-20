@@ -8,6 +8,7 @@ export default function StateDropdown() {
   // const [showDropDown, setShowDropDown] = useState(false);
   const [states, setStates] = useState([]);
   const {
+    // electionType,
     selected_state,
     setSelected_state,
     showStateDropDown,
