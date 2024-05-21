@@ -32,7 +32,7 @@ function RangeSlider() {
             "/analysis/voteshare?type=" +
             type +
             "&party=" +
-            selected_party +
+            selected_party.party +
             state
         );
         const responseData = await response.json();
@@ -100,7 +100,7 @@ function RangeSlider() {
     } else {
       deltaRef.current.innerText = delta.toFixed(0) + "%";
     }
-  }, 1000);
+  }, 350);
 
   const handleChange = (event, zeroClick = false) => {
     const value = zeroClick ? Number(event) : Number(event.target.value);

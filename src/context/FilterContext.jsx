@@ -1,6 +1,7 @@
 "use client";
 import RangeSliderAnimation from "../components/RangeSliderAnimation";
 import { createContext, useContext, useEffect, useState } from "react";
+
 //create context
 const context = createContext();
 
@@ -14,12 +15,15 @@ function FilterContextProvider({ children }) {
   const [showStateDropDown, setShowStateDropDown] = useState(false);
   const [selected_pc, setSelected_pc] = useState("Sharamgarh");
   const [showPCDropDown, setShowPCDropDown] = useState(false);
-  const [selected_party, setSelected_party] = useState("BJP");
+  const [selected_party, setSelected_party] = useState({
+    party: "BJP",
+    state: "Delhi",
+  });
   const [showPartyDropDown, setShowPartyDropDown] = useState(false);
 
   const [default_delta_value, setDefault_delta_value] = useState(-1);
   const [selected_Voter_Percentage, setSelected_Voter_Percentage] = useState({
-    delta: 0,
+    delta: -1,
     delta_type: "positive",
   });
 
@@ -41,21 +45,38 @@ function FilterContextProvider({ children }) {
         // fetch(`data/geojson/assembly.geojson`),
         fetch(`data/geojson/parliament.geojson`),
         // fetch(`https://dhruvresearch.com/api/v2/result/map?election_type=LS`),
-        fetch(
-          `https://dhruvresearch.com/api/v2/analysis/result?party=BJP&delta=0&delta_type=positive&state=Delhi&type=nation`
-        ),
+        // fetch(
+        //   `https://dhruvresearch.com/api/v2/analysis/result?party=BJP&delta=0&delta_type=positive&state=Delhi&type=nation`
+        // ),
       ])
         .then(async ([res1, res3, res4]) => {
           const a = await res1.json();
           // const b = await res2.json();
           const c = await res3.json();
-          const d = await res4.json();
+          // const d = await res4.json();
           // console.log("geojson", a, c, d);
           console.log("geojson", a, c);
+          // setStateGeojson(a);
+          // setStateLayer(
+          //   new GeoJsonLayer({
+          //     id: "state-geojson-layer",
+          //     data: a,
+          //     stroked: true,
+          //     filled: false,
+          //     lineWidthScale: 600,
+          //     getLineColor:
+          //       electionType === "STATE"
+          //         ? TRANSPARENT_COLOR
+          //         : DEFAULT_STATE_LINE_COLOR,
+          //     getFillColor: TRANSPARENT_COLOR,
+          //     getLineWidth: 4,
+          //   })
+          // );
+
           setStateGeojson(a);
           // setACGeojson(b);
           setPCGeojson(c);
-          setMapResult(d.data);
+          // setMapResult(d.data);
           // setLoading(false);
 
           setIsFetchingGeojson(false);
@@ -65,7 +86,25 @@ function FilterContextProvider({ children }) {
         });
     }
   }, []);
-
+  // useEffect(() => {
+  //   if (stateLayer) {
+  //     setStateLayer(
+  //       new GeoJsonLayer({
+  //         id: "state-geojson-layer",
+  //         data: a,
+  //         stroked: true,
+  //         filled: false,
+  //         lineWidthScale: 600,
+  //         getLineColor:
+  //           electionType === "STATE"
+  //             ? TRANSPARENT_COLOR
+  //             : DEFAULT_STATE_LINE_COLOR,
+  //         getFillColor: TRANSPARENT_COLOR,
+  //         getLineWidth: 4,
+  //       })
+  //     );
+  //   }
+  // }, [electionType]);
   // // ELECTION TYPE BASIC MAP RESULT FETCH
   // useEffect(() => {
   //   const getMapResult = async () => {
@@ -142,6 +181,7 @@ function FilterContextProvider({ children }) {
   //   const closeA = localStorage.getItem("onceCloseAnimation");
   //   if (closeA === null) setCloseAnimation(-1);
   // }, []);
+  // const [stateLayer, setStateLayer] = useState(null);
   return (
     <context.Provider
       value={{
@@ -180,6 +220,7 @@ function FilterContextProvider({ children }) {
         setDefault_delta_value,
 
         setCloseAnimation,
+        // stateLayer,
       }}
     >
       {children}

@@ -31,7 +31,10 @@ export default function PartyDropdown() {
         const responseData = await response.json();
         console.log("response party", responseData);
         setParties(responseData.data);
-        setSelected_party(responseData.data[0]);
+        setSelected_party({
+          party: responseData.data[0],
+          state: responseData.data[0],
+        });
       } catch (error) {
         console.log("error in fetch parties", error);
       }
@@ -41,7 +44,7 @@ export default function PartyDropdown() {
 
   const handleSelectParty = (name) => {
     // resetFilterToInitial(3);
-    setSelected_party(name);
+    setSelected_party({ ...selected_party, party: name });
     setShowStateDropDown(false);
     setShowPartyDropDown(false);
   };
@@ -67,7 +70,7 @@ export default function PartyDropdown() {
           id="select-box-1  "
           className="text-sm text-[black]   font-semibold"
         >
-          {selected_party}
+          {selected_party.party}
         </span>
         <span className="text-[gray] absolute right-[2px]">
           <svg
@@ -102,13 +105,13 @@ export default function PartyDropdown() {
               className={clsx(
                 "py-2.5 pb-1  px-6 hover:text-black hover:bg-[#ffc400] select-option rounded-tl-lg ",
                 {
-                  "bg-[#ffc400] text-black": selected_party === "BJP",
-                  "bg-white text-[gray]": selected_party !== "BJP",
+                  "bg-[#ffc400] text-black": selected_party.party === "BJP",
+                  "bg-white text-[gray]": selected_party.party !== "BJP",
                 }
               )}
               onClick={() => setparty("BJP")}
             >
-              {selected_party}
+              {selected_party.party}
               ${select_sabha === "Vidhan Sabha" ? "" : "& UTs"}
               {select_sabha === "Vidhan Sabha" ? "" : "& UTs"}
             </li> */}
@@ -119,9 +122,9 @@ export default function PartyDropdown() {
                   "py-2  px-6 hover:text-white hover:bg-[#ffc400] rounded-md text-sm",
                   {
                     "bg-[#ffc400] text-black font-semibold":
-                      selected_party === party,
+                      selected_party.party === party,
                     "bg-white text-black font-semibold":
-                      selected_party !== party,
+                      selected_party.party !== party,
                   }
                 )}
                 onClick={() => handleSelectParty(party)}
