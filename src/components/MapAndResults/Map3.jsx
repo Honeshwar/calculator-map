@@ -218,40 +218,40 @@ export default function Map3() {
         //    zoom: windowWidth < 640 ? 2.5 : 3.5,
         // });
 
-        // viewport
-        if (electionType === "STATE") {
-          const stateCoordinates = STATE_COORDINATES.find(
-            (row) => row.state.toUpperCase() === selected_state.toUpperCase()
-          );
+        // // viewport
+        // if (electionType === "STATE") {
+        //   const stateCoordinates = STATE_COORDINATES.find(
+        //     (row) => row.state.toUpperCase() === selected_state.toUpperCase()
+        //   );
 
-          console.log("stateCoordinates", stateCoordinates);
-          if (!stateCoordinates) return;
+        //   console.log("stateCoordinates", stateCoordinates);
+        //   if (!stateCoordinates) return;
 
-          setViewport({
-            latitude: stateCoordinates.latitude,
-            longitude: stateCoordinates.longitude,
-            zoom:
-              windowWidth < 800
-                ? stateCoordinates.zoom * 0.82
-                : stateCoordinates.zoom * 0.98,
-          });
-        } else {
-          setViewport({
-            longitude: windowWidth < 640 ? 78.9629 : 78.9629,
-            latitude: windowWidth < 640 ? 20.5937 : 20.5937,
-            zoom: windowWidth < 640 ? 2.5 : 3.5,
-          });
-        }
+        //   setViewport({
+        //     latitude: stateCoordinates.latitude,
+        //     longitude: stateCoordinates.longitude,
+        //     zoom:
+        //       windowWidth < 800
+        //         ? stateCoordinates.zoom * 0.82
+        //         : stateCoordinates.zoom * 0.98,
+        //   });
+        // } else {
+        //   setViewport({
+        //     longitude: windowWidth < 640 ? 78.9629 : 78.9629,
+        //     latitude: windowWidth < 640 ? 20.5937 : 20.5937,
+        //     zoom: windowWidth < 640 ? 2.5 : 3.5,
+        //   });
+        // }
       } catch (error) {
         console.log(error);
       }
     };
 
-    // if (callToGetMapResult) {
-    // setMapResult({});
-    if (tooltipRef.current) tooltipRef.current.innerHTML = "";
-    getMapResult();
-    // }
+    if (selected_Voter_Percentage.delta !== -1) {
+      // setMapResult({});
+      if (tooltipRef.current) tooltipRef.current.innerHTML = "";
+      getMapResult();
+    }
   }, [electionType, selected_party, selected_Voter_Percentage]);
 
   useEffect(() => {
@@ -308,6 +308,30 @@ export default function Map3() {
         }),
       ];
 
+      // viewport
+      if (electionType === "STATE") {
+        const stateCoordinates = STATE_COORDINATES.find(
+          (row) => row.state.toUpperCase() === selected_state.toUpperCase()
+        );
+
+        console.log("stateCoordinates", stateCoordinates);
+        if (!stateCoordinates) return;
+
+        setViewport({
+          latitude: stateCoordinates.latitude,
+          longitude: stateCoordinates.longitude,
+          zoom:
+            windowWidth < 800
+              ? stateCoordinates.zoom * 0.82
+              : stateCoordinates.zoom * 0.98,
+        });
+      } else {
+        setViewport({
+          longitude: windowWidth < 640 ? 78.9629 : 78.9629,
+          latitude: windowWidth < 640 ? 20.5937 : 20.5937,
+          zoom: windowWidth < 640 ? 2.5 : 3.5,
+        });
+      }
       setLayers(layers);
     }
   }, [PCGeojson, StateGeojson, mapResult]);
@@ -523,7 +547,7 @@ export default function Map3() {
       // if (x < margin) x = margin;
 
       // Adjust y to place the cursor at the top-center of the tooltip
-      console.log("y", y, tooltipHeight, containerRef.current.clientHeight);
+      // console.log("y", y, tooltipHeight, containerRef.current.clientHeight);
       // y -= tooltipHeight;
       // y = tooltipHeight;
       y += margin;
@@ -534,7 +558,7 @@ export default function Map3() {
       }
       // if (y < margin) y = margin;
 
-      console.log("y", y);
+      // console.log("y", y);
 
       if (results && selected_Voter_Percentage.delta === default_delta_value) {
         let voteShare = "",
@@ -816,6 +840,7 @@ export default function Map3() {
 
   return (
     <>
+      {/* && !loading && layers.length */}
       {!isFetchingGeojson ? (
         <div
           ref={containerRef}
@@ -996,6 +1021,6 @@ mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
   layers={layers}
   mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
   {...viewport}
-  mapStyle="mapbox://styles/mapbox/light-v9"
+  // mapStyle="mapbox://styles/mapbox/light-v9"
 />
 </DeckGL> */
