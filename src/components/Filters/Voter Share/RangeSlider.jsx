@@ -1,6 +1,6 @@
 import { useFilterContextValue } from "../../../context/FilterContext";
 import Loading from "../../../components/Loading";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useCallback } from "react";
 // import "./RangeSlider.css"; // Import CSS for styling (see below)
 
 function RangeSlider() {
@@ -83,60 +83,79 @@ function RangeSlider() {
   // }, [electionType]);
   const [value, setValue] = useState(-1); // State to manage slider value
 
-  const dbn = debouncing((v) => {
-    // const delta = v.delta - selected_Voter_Percentage.delta;
-    // if (delta >= 0) {
-    //   deltaRef.current.innerText = "+" + delta.toFixed(0) + "%";
-    // } else {
-    //   deltaRef.current.innerText = delta.toFixed(0) + "%";
-    // }
+  // Create a debounced version of the handleChange function
+  const debouncedHandleChange = useCallback(
+    debouncing((v) => {
+      const delta = Number(v.delta);
 
-    const delta = v.delta - default_delta_value;
-    if (delta === 0) {
-      deltaRef.current.innerText = "0%";
-    } else if (delta > 0) {
-      deltaRef.current.innerText = "+" + delta.toFixed(0) + "%";
-    } else {
-      deltaRef.current.innerText = delta.toFixed(0) + "%";
-    }
+      if (delta === 0) {
+        deltaRef.current.innerText = "0%";
+      } else if (delta > 0) {
+        deltaRef.current.innerText = "+" + delta.toFixed(0) + "%";
+      } else {
+        deltaRef.current.innerText = delta.toFixed(0) + "%";
+      }
 
-    setSelected_Voter_Percentage({ ...v, delta: Math.abs(delta).toFixed(0) });
-  }, 700);
+      setSelected_Voter_Percentage(v);
+    }, 500),
+    []
+  );
+  // const dbn = debouncing((v) => {
+  //   // const delta = v.delta - selected_Voter_Percentage.delta;
+  //   // if (delta >= 0) {
+  //   //   deltaRef.current.innerText = "+" + delta.toFixed(0) + "%";
+  //   // } else {
+  //   //   deltaRef.current.innerText = delta.toFixed(0) + "%";
+  //   // }
 
+  //   const delta = Number(v.delta);
+  //   console.log("delta", typeof delta);
+  //   if (delta === 0) {
+  //     deltaRef.current.innerText = "0%";
+  //   } else if (delta > 0) {
+  //     deltaRef.current.innerText = "+" + delta.toFixed(0) + "%";
+  //   } else {
+  //     deltaRef.current.innerText = delta.toFixed(0) + "%";
+  //   }
+
+  //   setSelected_Voter_Percentage(v);
+  // }, 1000);
   const handleChange = (event, zeroClick = false) => {
-    const value = zeroClick ? Number(event) : Number(event.target.value);
+    const newValue = zeroClick ? Number(event) : Number(event.target.value);
 
-    if (value !== default_delta_value) {
+    if (newValue !== default_delta_value) {
       rangeRef.current.innerText = value + "%";
 
-      if (value < selected_Voter_Percentage.delta) {
+      if (newValue < value) {
         // console.log("value +", value, typeof value);
         rangeRef.current.style.color = "rgb(239, 68, 68)";
-      } else if (value >= selected_Voter_Percentage.delta) {
+      } else if (newValue >= value) {
         // console.log("value -", value, typeof value);
         rangeRef.current.style.color = "rgb(34 ,197, 94)";
       }
     } else if (zeroClick) {
-      inputRef.current.value = value;
+      inputRef.current.value = newValue;
     }
     // else rangeRef.current.style.color = "rgb(0,0,0)";
 
-    dbn({
-      delta: value,
-      delta_type:
-        value - selected_Voter_Percentage.delta > 0 ? "positive" : "negative",
+    const newDelta = newValue - default_delta_value;
+    debouncedHandleChange({
+      delta: Math.abs(newDelta).toFixed(0),
+      delta_type: newDelta >= 0 ? "positive" : "negative",
     });
-    setValue(value);
+    setValue(newValue);
   };
 
   function debouncing(func, delay) {
     let timeoutId;
     return (...args) => {
+      console.log("args", args, timeoutId);
       let a = clearTimeout(timeoutId);
       timeoutId = setTimeout(() => {
         console.log("called", a);
         func.apply(null, args);
       }, delay);
+      console.log("timeoutId", timeoutId);
     };
   }
 
