@@ -84,7 +84,6 @@ function RangeSlider() {
   const [value, setValue] = useState(-1); // State to manage slider value
 
   const dbn = debouncing((v) => {
-    setSelected_Voter_Percentage(v);
     // const delta = v.delta - selected_Voter_Percentage.delta;
     // if (delta >= 0) {
     //   deltaRef.current.innerText = "+" + delta.toFixed(0) + "%";
@@ -100,7 +99,9 @@ function RangeSlider() {
     } else {
       deltaRef.current.innerText = delta.toFixed(0) + "%";
     }
-  }, 350);
+
+    setSelected_Voter_Percentage({ ...v, delta: Math.abs(delta).toFixed(0) });
+  }, 700);
 
   const handleChange = (event, zeroClick = false) => {
     const value = zeroClick ? Number(event) : Number(event.target.value);
@@ -183,8 +184,8 @@ function RangeSlider() {
 
               {/* dotted line and default value change*/}
               <span
-                onClick={() => handleChange(default_delta_value, true)}
-                className="border-r border-dashed border-gray-400  absolute  h-full w-[1px] cursor-pointer z-[0]"
+                // onClick={() => handleChange(default_delta_value, true)}
+                className="border-r border-dashed border-gray-400  absolute  h-full w-[1px] z-[0]"
                 style={{
                   left:
                     default_delta_value === 0
@@ -291,7 +292,9 @@ function RangeSlider() {
                 className={"absolute text-[10px] top-[calc(50%-6px)]"}
                 style={{
                   left:
-                    value <= 20
+                    value <= 15
+                      ? value + 13 + `%`
+                      : value <= 20
                       ? value - 8 + `%`
                       : value <= 40
                       ? value - 12 + `%`
@@ -300,7 +303,7 @@ function RangeSlider() {
                       : value <= 80
                       ? value - 21 + `%`
                       : value - 25 + `%`,
-                  color: "white",
+                  color: value <= 15 ? "gray" : "white",
                 }}
               >
                 {/* {"-5%"} */}

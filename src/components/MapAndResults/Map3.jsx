@@ -332,6 +332,14 @@ export default function Map3() {
           zoom: windowWidth < 640 ? 2.5 : 3.5,
         });
       }
+
+      //reset tooltip
+      if (tooltipRef.current) {
+        // reset
+        tooltipRef.current.style.display = "none";
+        tooltipRef.current.innerHTML = "";
+      }
+
       setLayers(layers);
     }
   }, [PCGeojson, StateGeojson, mapResult]);
@@ -523,6 +531,10 @@ export default function Map3() {
         tooltip.style.display = "none";
         return null;
       }
+
+      // reset
+      tooltip.style.display = "none";
+      tooltip.innerHTML = "";
 
       // Set tooltip content
       // tooltip.innerHTML = "hgdj"; //object.properties.name;
@@ -838,6 +850,16 @@ export default function Map3() {
   //   return null; // DeckGL won't render its own tooltip
   // };
 
+  useEffect(() => {
+    const container = document.getElementById("react-map");
+    window?.addEventListener("mousemove", () => {
+      if (tooltipRef.current) {
+        // reset
+        tooltipRef.current.style.display = "none";
+        tooltipRef.current.innerHTML = "";
+      }
+    });
+  }, []);
   return (
     <>
       {/* && !loading && layers.length */}
