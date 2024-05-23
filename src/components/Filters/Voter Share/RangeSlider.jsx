@@ -109,9 +109,7 @@ function RangeSlider() {
   //   setSelected_Voter_Percentage(v);
   // }, 1000);
   const handleChange = (event, click = false) => {
-    const newValue = click
-      ? Number(event).toFixed(0)
-      : Number(event.target.value);
+    const newValue = click ? Number(event) : Number(event.target.value);
 
     // color change
     if (newValue < value) {
@@ -144,7 +142,7 @@ function RangeSlider() {
     setValue(Number(newValue));
   };
 
-  console.log("value", value);
+  console.log("value", value, value === default_delta_value);
   function debouncing(func, delay) {
     let timeoutId;
     return (...args) => {
@@ -193,7 +191,8 @@ function RangeSlider() {
                       ? value - 2 + `%`
                       : value - 5 + `%`,
                   color: "gray",
-                  top: "38px",
+                  // top: "38px",
+                  top: "-28px",
                   paddingInline: "20px",
                 }}
               >
@@ -297,7 +296,8 @@ function RangeSlider() {
                       ? default_delta_value - 7.4 + `%`
                       : default_delta_value - 8 + `%`,
                   color: "gray",
-                  top: "-28px",
+                  // top: "-28px",
+                  top: "40px",
                 }}
               >
                 {default_delta_value}%
@@ -373,7 +373,10 @@ function RangeSlider() {
             {/* reset button */}
             <div className="w-fit  flex justify-center ">
               <button
-                onClick={() => handleChange(default_delta_value, true)}
+                onClick={() => {
+                  if (value === default_delta_value) return;
+                  handleChange(default_delta_value, true);
+                }}
                 className="text-sm bg-gray-400 rounded-md px-2 py-[5px] text-white w-full hover:bg-gray-500"
               >
                 Reset
