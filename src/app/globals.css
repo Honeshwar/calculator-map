@@ -162,3 +162,15 @@ i.slider::-ms-fill-upper {
     transform: rotate(45deg);
   }
 }
+
+/* Force spinner controls to be always visible on WebKit browsers (e.g., Chrome, Safari) */
+.number-input[type="number"]::-webkit-inner-spin-button,
+.number-input[type="number"]::-webkit-outer-spin-button {
+  opacity: 1;
+  display: inline-block;
+}
+
+/* Forcing visibility for non-WebKit browsers like Firefox */
+.number-input[type="number"] {
+  -moz-appearance: number-input;
+}

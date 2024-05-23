@@ -60,8 +60,8 @@ function RangeSlider() {
               ? "positive"
               : "negative",
         });
-        setValue(defaultRange);
-        setDefault_delta_value(defaultRange);
+        setValue(Number(defaultRange));
+        setDefault_delta_value(Number(defaultRange));
         if (deltaRef.current) deltaRef.current.innerText = "0%";
         // setLoading(false);
       } catch (error) {
@@ -85,19 +85,7 @@ function RangeSlider() {
 
   // Create a debounced version of the handleChange function
   const debouncedHandleChange = useCallback(
-    debouncing((v) => {
-      const delta = Number(v.delta);
-
-      if (delta === 0) {
-        deltaRef.current.innerText = "0%";
-      } else if (delta > 0) {
-        deltaRef.current.innerText = "+" + delta.toFixed(0) + "%";
-      } else {
-        deltaRef.current.innerText = delta.toFixed(0) + "%";
-      }
-
-      setSelected_Voter_Percentage(v);
-    }, 500),
+    debouncing((v) => setSelected_Voter_Percentage(v), 500),
     []
   );
   // const dbn = debouncing((v) => {
@@ -120,42 +108,53 @@ function RangeSlider() {
 
   //   setSelected_Voter_Percentage(v);
   // }, 1000);
-  const handleChange = (event, zeroClick = false) => {
-    const newValue = zeroClick ? Number(event) : Number(event.target.value);
+  const handleChange = (event, click = false) => {
+    const newValue = click
+      ? Number(event).toFixed(0)
+      : Number(event.target.value);
 
-    if (newValue !== default_delta_value) {
-      rangeRef.current.innerText = value + "%";
+    // color change
+    if (newValue < value) {
+      rangeRef.current.style.color = "rgb(239, 68, 68)"; //red
+    } else if (newValue >= value) {
+      rangeRef.current.style.color = "rgb(34 ,197, 94)"; //green
+    }
 
-      if (newValue < value) {
-        // console.log("value +", value, typeof value);
-        rangeRef.current.style.color = "rgb(239, 68, 68)";
-      } else if (newValue >= value) {
-        // console.log("value -", value, typeof value);
-        rangeRef.current.style.color = "rgb(34 ,197, 94)";
-      }
-    } else if (zeroClick) {
+    // check is user click or slide
+    if (click) {
       inputRef.current.value = newValue;
     }
     // else rangeRef.current.style.color = "rgb(0,0,0)";
 
     const newDelta = newValue - default_delta_value;
+
+    // setting delta at input  slider
+    if (newDelta === 0) {
+      deltaRef.current.innerText = "0%";
+    } else if (newDelta > 0) {
+      deltaRef.current.innerText = "+" + newDelta.toFixed(0) + "%";
+    } else {
+      deltaRef.current.innerText = newDelta.toFixed(0) + "%";
+    }
+
     debouncedHandleChange({
       delta: Math.abs(newDelta).toFixed(0),
       delta_type: newDelta >= 0 ? "positive" : "negative",
     });
-    setValue(newValue);
+    setValue(Number(newValue));
   };
 
+  console.log("value", value);
   function debouncing(func, delay) {
     let timeoutId;
     return (...args) => {
-      console.log("args", args, timeoutId);
+      // console.log("args", args, timeoutId);
       let a = clearTimeout(timeoutId);
       timeoutId = setTimeout(() => {
         console.log("called", a);
         func.apply(null, args);
       }, delay);
-      console.log("timeoutId", timeoutId);
+      // console.log("timeoutId", timeoutId);
     };
   }
 
@@ -165,7 +164,7 @@ function RangeSlider() {
         <Loading />
       ) : (
         <>
-          <div className="w-full flex gap-3 items-center">
+          <div className="w-full flex gap-3 items-center mt-6">
             <div className="slider-container px-3  py-[10px] border-2 rounded-full flex justify-center items-center">
               <input
                 ref={inputRef}
@@ -298,7 +297,7 @@ function RangeSlider() {
                       ? default_delta_value - 7.4 + `%`
                       : default_delta_value - 8 + `%`,
                   color: "gray",
-                  top: "60px",
+                  top: "-28px",
                 }}
               >
                 {default_delta_value}%
@@ -341,14 +340,81 @@ function RangeSlider() {
             </svg>
           </div>
 
-          {/* reset button */}
-          <div className="w-full  flex justify-center mt-[50px]">
-            <button
-              onClick={() => handleChange(default_delta_value, true)}
-              className="text-sm bg-gray-400 rounded-md px-2 py-[5px] text-white w-full hover:bg-gray-500"
+          {/* after input slider */}
+          <div className="w-full flex justify-center items-center gap-5    mt-8">
+            {/* decrease input */}
+            <form
+              onSubmit={(e) => {
+                e.preventDefault(), console.log("e", e);
+                const inputValue = Number("-" + e.target[0].value);
+
+                const value1 = inputValue + value;
+                // console.log("inputValue", inputValue, value1);
+                if (inputValue === 0 || value === 0) return;
+                handleChange(value1 < 0 ? 0 : value1, true);
+              }}
+              className="flex gap-1 items-center"
             >
-              Reset
-            </button>
+              <input
+                className="w-10 pl-1 number-input border-[1px] border-gray-400  rounded-sm outline-none"
+                type="number"
+                placeholder="0"
+                min={0}
+                max={100}
+                required
+              />
+              <button
+                className="font-extrabold bg-gray-400 hover:bg-gray-500 rounded-sm flex justify-center items-center w-6 h-6 text-white"
+                type="submit"
+              >
+                -
+              </button>
+            </form>
+            {/* reset button */}
+            <div className="w-fit  flex justify-center ">
+              <button
+                onClick={() => handleChange(default_delta_value, true)}
+                className="text-sm bg-gray-400 rounded-md px-2 py-[5px] text-white w-full hover:bg-gray-500"
+              >
+                Reset
+              </button>
+            </div>
+
+            {/* increase input */}
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                console.log("e", e);
+                const inputValue = Number(e.target[0].value);
+
+                const value1 = inputValue + value;
+                // console.log(
+                //   "inputValue",
+                //   inputValue,
+                //   value1,
+                //   value,
+                //   typeof value
+                // );
+                if (inputValue === 0 || value === 100) return;
+                handleChange(value1 > 100 ? 100 : value1, true);
+              }}
+              className="flex gap-1 items-center"
+            >
+              <input
+                className="w-10 pl-1 number-input border-[1px] border-gray-400  rounded-sm outline-none"
+                type="number"
+                placeholder="0"
+                min={0}
+                max={100}
+                required
+              />
+              <button
+                className="font-extrabold bg-gray-400 hover:bg-gray-500 rounded-sm flex justify-center items-center w-6 h-6 text-white"
+                type="submit"
+              >
+                +
+              </button>
+            </form>
           </div>
         </>
       )}
