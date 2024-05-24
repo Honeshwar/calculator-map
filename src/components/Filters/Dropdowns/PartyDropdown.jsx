@@ -19,7 +19,6 @@ export default function PartyDropdown() {
 
   useEffect(() => {
     const fetchParties = async () => {
-      // const type = electionType === "STATE" ? "state" : "nation";
       const param =
         electionType === "STATE"
           ? "?type=state&state=" + selected_state
@@ -43,7 +42,6 @@ export default function PartyDropdown() {
   }, [electionType, selected_state]);
 
   const handleSelectParty = (name) => {
-    // resetFilterToInitial(3);
     setSelected_party({ ...selected_party, party: name });
     setShowStateDropDown(false);
     setShowPartyDropDown(false);
@@ -101,20 +99,6 @@ export default function PartyDropdown() {
             id="dropdown-scroll"
             className="h-[200px] w-full overflow-y-auto text-sm flex flex-col gap-1 py-0"
           >
-            {/* <li
-              className={clsx(
-                "py-2.5 pb-1  px-6 hover:text-black hover:bg-[#ffc400] select-option rounded-tl-lg ",
-                {
-                  "bg-[#ffc400] text-black": selected_party.party === "BJP",
-                  "bg-white text-[gray]": selected_party.party !== "BJP",
-                }
-              )}
-              onClick={() => setparty("BJP")}
-            >
-              {selected_party.party}
-              ${select_sabha === "Vidhan Sabha" ? "" : "& UTs"}
-              {select_sabha === "Vidhan Sabha" ? "" : "& UTs"}
-            </li> */}
             {parties?.map((party, index) => (
               <li
                 key={index}

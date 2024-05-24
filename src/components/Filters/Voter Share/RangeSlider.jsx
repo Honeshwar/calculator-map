@@ -1,7 +1,6 @@
 import { useFilterContextValue } from "../../../context/FilterContext";
 import Loading from "../../../components/Loading";
 import React, { useEffect, useRef, useState, useCallback } from "react";
-// import "./RangeSlider.css"; // Import CSS for styling (see below)
 
 function RangeSlider() {
   const inputRef = useRef(null);
@@ -9,7 +8,6 @@ function RangeSlider() {
   const rangeRef = useRef(null);
   const deltaRef = useRef(null);
 
-  // const [loading, setLoading] = useState(false);
   const {
     selected_party,
     selected_Voter_Percentage,
@@ -37,22 +35,12 @@ function RangeSlider() {
         );
         const responseData = await response.json();
         const defaultRange = responseData.data;
-        // const defaultRange = 33;
-        // setValue(parseInt(event.target.value)); // Update slider value
+
         if (defaultRangeRef.current) {
           defaultRangeRef.current.innerText = defaultRange + "%";
           inputRef.current.value = defaultRange;
-          // setValue(event.target.value);
-
-          // if (defaultRange < 0) {
-          //   // console.log("defaultRange +", defaultRange, typeof defaultRange);
-          //   defaultRangeRef.current.style.color = "rgb(239, 68, 68)";
-          // } else if (defaultRange > 0) {
-          //   // console.log("defaultRange -", defaultRange, typeof defaultRange);
-          //   defaultRangeRef.current.style.color = "rgb(34 ,197, 94)";
-          // } else defaultRangeRef.current.style.color = "rgb(0,0,0)";
         }
-        // dbn(defaultRange);
+
         setSelected_Voter_Percentage({
           delta: defaultRange,
           delta_type:
@@ -72,15 +60,7 @@ function RangeSlider() {
     };
     fetchParties();
   }, [selected_party, electionType]);
-  // useEffect(() => {
-  //   if (selected_Voter_Percentage.delta !== 0) {
-  //     setSelected_Voter_Percentage(0);
-  //     rangeRef.current.innerText = 0 + "%";
-  //     rangeRef.current.style.color = "rgb(0,0,0)";
-  //     const input = document.getElementById("range-slider");
-  //     input.value = 0;
-  //   }
-  // }, [electionType]);
+
   const [value, setValue] = useState(-1); // State to manage slider value
 
   // Create a debounced version of the handleChange function
@@ -88,26 +68,7 @@ function RangeSlider() {
     debouncing((v) => setSelected_Voter_Percentage(v), 500),
     []
   );
-  // const dbn = debouncing((v) => {
-  //   // const delta = v.delta - selected_Voter_Percentage.delta;
-  //   // if (delta >= 0) {
-  //   //   deltaRef.current.innerText = "+" + delta.toFixed(0) + "%";
-  //   // } else {
-  //   //   deltaRef.current.innerText = delta.toFixed(0) + "%";
-  //   // }
 
-  //   const delta = Number(v.delta);
-  //   console.log("delta", typeof delta);
-  //   if (delta === 0) {
-  //     deltaRef.current.innerText = "0%";
-  //   } else if (delta > 0) {
-  //     deltaRef.current.innerText = "+" + delta.toFixed(0) + "%";
-  //   } else {
-  //     deltaRef.current.innerText = delta.toFixed(0) + "%";
-  //   }
-
-  //   setSelected_Voter_Percentage(v);
-  // }, 1000);
   const handleChange = (event, click = false) => {
     const newValue = click ? Number(event) : Number(event.target.value);
 
@@ -148,17 +109,13 @@ function RangeSlider() {
     setValue(Number(newValue));
   };
 
-  // console.log("value", value, value === default_delta_value);
   function debouncing(func, delay) {
     let timeoutId;
     return (...args) => {
-      // console.log("args", args, timeoutId);
       let a = clearTimeout(timeoutId);
       timeoutId = setTimeout(() => {
-        console.log("called", a);
         func.apply(null, args);
       }, delay);
-      // console.log("timeoutId", timeoutId);
     };
   }
 
@@ -355,7 +312,7 @@ function RangeSlider() {
                 const inputValue = Number("-" + e.target[0].value);
 
                 const value1 = inputValue + value;
-                // console.log("inputValue", inputValue, value1);
+
                 if (inputValue === 0 || value === 0) return;
                 handleChange(value1 < 0 ? 0 : value1, true);
               }}
@@ -397,13 +354,7 @@ function RangeSlider() {
                 const inputValue = Number(e.target[0].value);
 
                 const value1 = inputValue + value;
-                // console.log(
-                //   "inputValue",
-                //   inputValue,
-                //   value1,
-                //   value,
-                //   typeof value
-                // );
+
                 if (inputValue === 0 || value === 100) return;
                 handleChange(value1 > 100 ? 100 : value1, true);
               }}
@@ -430,43 +381,5 @@ function RangeSlider() {
     </>
   );
 }
-//
+
 export default RangeSlider;
-{
-  /* <div className=" flex gap-5 justify-between items-center w-[80%]   mt-2 mx-2">
-<div className="flex items-center justify-center">
-  <span
-    onClick={() => {
-      const newDelta = selected_Voter_Percentage.delta - 10;
-      handleChange(newDelta >= -100 ? newDelta : -100, true);
-    }}
-    className="h-6 w-6 flex justify-center items-center rounded-full bg-gray-200 hover:bg-gray-400 cursor-pointer"
-  >
-    -
-  </span>
-  <span className="ml-1 text-sm">10%</span>
-</div>
-<span
-  ref={rangeRef}
-  className={clsx("text-sm pt-1", {
-    "text-red-500": value < 0,
-    "text-green-500": value > 0,
-    "text-black": value === 0,
-  })}
->
-  {value}%
-</span>
-<div className="flex items-center justify-center">
-  <span
-    onClick={() => {
-      const newDelta = selected_Voter_Percentage.delta + 10;
-      handleChange(newDelta <= 100 ? newDelta : 100, true);
-    }}
-    className="h-6 w-6 flex justify-center items-center rounded-full bg-orange-200 hover:bg-orange-300 cursor-pointer"
-  >
-    +
-  </span>
-  <span className="ml-1 text-sm">10%</span>
-</div>
-</div> */
-}

@@ -1,9 +1,7 @@
 import Filters from "../components/Filters/Filters";
-import Footer from "../components/Footer/Footer";
 import MapViewAndResult from "../components/MapAndResults/MapViewAndResult";
 import Result from "../components/MapAndResults/Result";
 import Navbar from "../components/Navbar/Navbar";
-import RangeSliderAnimation from "../components/RangeSliderAnimation";
 import { FilterContextProvider } from "../context/FilterContext";
 
 export default function Home() {

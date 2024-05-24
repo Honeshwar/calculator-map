@@ -7,14 +7,12 @@ import Loading from "../Loading";
 
 export default function Result() {
   const {
-    electionType,
     selected_Voter_Percentage,
     mapResult,
     isFetchingGeojson,
     default_delta_value,
   } = useFilterContextValue();
-  // const [isVoterShareFilterApplied, setIsVoterShareFilterApplied] =
-  //   useState(false);
+
   const d = [
     {
       party: "BJP",
@@ -54,13 +52,6 @@ export default function Result() {
     }
   }, [mapResult.summary]);
 
-  // console.log(
-  //   "data summary",
-  //   selected_Voter_Percentage,
-  //   default_delta_value,
-  //   typeof selected_Voter_Percentage.delta,
-  //   typeof default_delta_value
-  // );
   return (
     <>
       {isFetchingGeojson ? (
@@ -70,7 +61,9 @@ export default function Result() {
       ) : (
         <div className="  py-1 min-w-[250px] overflow-y-auto">
           <h5 className="  text-center  sm:text-right text-gray-500 font-bold">
-            {electionType}
+            {Number(selected_Voter_Percentage.delta) === default_delta_value
+              ? "LS 2019 Actual Result"
+              : "Actual vs Modelled Result"}
           </h5>
 
           <ul className="flex flex-col gap-2 float-right mt-2">
@@ -175,23 +168,6 @@ export default function Result() {
                         &gt;&gt;
                       </span>
                       {item.revisedSeatCount?.toFixed(0)}
-
-                      {/* <span className="flex items-center px-1 pt-1"> */}
-                      {/* <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      viewBox="0 0 512 512"
-                      fill="white"
-                      className="w-4 h-4"
-                      width={20}
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M7 10l4 4 4-4 5 5m0 0h-3.207M20 15v-3.207"
-                      />
-                    </svg> */}
 
                       {item.revisedSeatCount?.toFixed(0) - item.seatCount >=
                       0 ? (

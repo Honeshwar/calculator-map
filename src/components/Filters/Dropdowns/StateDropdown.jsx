@@ -3,12 +3,9 @@ import { useEffect, useState } from "react";
 import { useFilterContextValue } from "../../../context/FilterContext";
 import clsx from "clsx";
 
-// console.log("NEXT_PUBLIC_API_URL AT SERVER: ", process.env.NEXT_PUBLIC_API_URL);
 export default function StateDropdown() {
-  // const [showDropDown, setShowDropDown] = useState(false);
   const [states, setStates] = useState([]);
   const {
-    // electionType,
     selected_state,
     setSelected_state,
     showStateDropDown,
@@ -37,7 +34,6 @@ export default function StateDropdown() {
   }, []);
 
   const handleSelectState = (name) => {
-    // resetFilterToInitial(3);
     setSelected_state(name);
     setShowStateDropDown(false);
   };

@@ -33,58 +33,6 @@ export default function PC_Dropdown() {
     setSelected_pc(constituency);
     setShowPCDropDown(false);
   };
-  //   useEffect(() => {
-  //     const fetchConstituency = async () => {
-  //       try {
-  //         const response = await fetch(
-  //           `https://dhruvresearch.com/api/v2/result/constituency?state=${select_state}&election_type=${
-  //             select_sabha === "Vidhan Sabha" ? "VS" : "LS"
-  //           }&limit=100`
-  //         );
-  //         const responseData = await response.json();
-  //         //console.log("result", responseData);
-  //         // setSelect_constituency(responseData.data);
-  //         setConstituency(responseData.data);
-  //       } catch (error) {
-  //         //console.log("error in fetch constituency", error);
-  //       }
-  //     };
-  //     if (select_state !== "Select State") {
-  //       fetchConstituency();
-  //     } else {
-  //       setSelect_constituency(
-  //         select_sabha === "Vidhan Sabha"
-  //           ? {
-  //               acNo: -1,
-  //               acName: "Select AC",
-  //             }
-  //           : {
-  //               pcNo: -1,
-  //               pcName: "Select PC",
-  //             }
-  //       );
-  //     }
-  //   }, [select_state]);
-
-  //   useEffect(() => {
-  //     setSelect_constituency(
-  //       select_sabha === "Vidhan Sabha"
-  //         ? {
-  //             acNo: -1,
-  //             acName: "Select AC",
-  //           }
-  //         : {
-  //             pcNo: -1,
-  //             pcName: "Select PC",
-  //           }
-  //     );
-  //   }, [select_sabha]);
-
-  //   const handleSelectConstituency = (constituency) => {
-  //     resetFilterToInitial(2);
-  //     setSelect_constituency(constituency);
-  //     setShowConstituencyDropDown(false);
-  //   };
   return (
     <fieldset className="cursor-pointer border-[1px] border-[lightgray] rounded-md w-[250px]  py-1 pb-[8px] relative">
       <legend className="text-[12px] text-gray-500 mx-2 px-1 relative">

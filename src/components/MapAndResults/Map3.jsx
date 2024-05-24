@@ -18,17 +18,7 @@ import hexRgb from "hex-rgb";
 import Loading from "../Loading";
 export default function Map3() {
   const windowWidth = typeof window !== "undefined" ? window.innerWidth : 500;
-  // const [windowWidth, setWindowWidth] = useState(500);
-  // useEffect(() => {
-  //   if (typeof window !== "undefined") {
-  //     setWindowWidth(window.innerWidth);
-  //     setViewport({
-  //       longitude: windowWidth < 640 ? 78.9629 : 78.9629,
-  //       latitude: windowWidth < 640 ? 20.5937 : 20.5937,
-  //       zoom: windowWidth < 640 ? 2.5 : 3.5,
-  //     });
-  //   }
-  // }, []);
+
   const deckRef = useRef(null);
   const containerRef = useRef();
   const [viewport, setViewport] = useState({
@@ -44,10 +34,7 @@ export default function Map3() {
     mapResult,
     setMapResult,
     selected_state,
-    // setSelected_state,
-    // select_constituency,
-    // setSelect_constituency,
-    // loading,
+
     PCGeojson,
     ACGeojson,
     StateGeojson,
@@ -55,7 +42,6 @@ export default function Map3() {
     setIsFetchingGeojson,
     selected_Voter_Percentage,
     default_delta_value,
-    // stateLayer,
   } = useFilterContextValue();
 
   const [select_state, setSelect_state] = useState("Select State");
@@ -63,134 +49,15 @@ export default function Map3() {
     pcNo: -1,
     pcName: "Select Constituency",
   });
-  const [callToGetMapResult, setCallToGetMapResult] = useState(false);
-  const [hoveredFeatureId, setHoveredFeatureId] = useState(null);
 
   useEffect(() => {
     if (electionType === "STATE") {
-      // const stateCoordinates = STATE_COORDINATES.find(
-      //   (row) => row.state.toUpperCase() === selected_state.toUpperCase()
-      // );
-
-      // console.log("stateCoordinates", stateCoordinates);
-      // if (!stateCoordinates) return;
-
-      // setViewport({
-      //   latitude: stateCoordinates.latitude,
-      //   longitude: stateCoordinates.longitude,
-      //   zoom:
-      //     windowWidth < 800
-      //       ? stateCoordinates.zoom * 0.82
-      //       : stateCoordinates.zoom * 0.98,
-      // });
-
       setSelect_state(selected_state);
-      // setLayers([]);
     } else {
       setSelect_state("Select State");
-      // setViewport({
-      //   longitude: windowWidth < 640 ? 78.9629 : 78.9629,
-      //   latitude: windowWidth < 640 ? 20.5937 : 20.5937,
-      //   zoom: windowWidth < 640 ? 2.5 : 3.5,
-      // });
-      // setLayers([]);
     }
   }, [electionType, selected_state]);
 
-  // useEffect(() => {
-  //   // if (
-  //   //   electionType === "LOK SABHA" || electionType === "INDIA"
-  //   //     ? select_constituency.pcNo !== -1
-  //   //     : select_constituency.acNo !== -1
-  //   // ) {
-  //   //   const stateCoordinates = STATE_COORDINATES.find(
-  //   //     (row) => row.state.toUpperCase() === select_state.toUpperCase()
-  //   //   );
-  //   //   ////console.log("stateCoordinates", stateCoordinates);
-  //   //   if (!stateCoordinates) return;
-  //   //   setViewport({
-  //   //     latitude: stateCoordinates.latitude,
-  //   //     longitude: stateCoordinates.longitude,
-  //   //     zoom:
-  //   //       windowWidth < 800
-  //   //         ? stateCoordinates.zoom * 0.82
-  //   //         : stateCoordinates.zoom * 0.82,
-  //   //   });
-  //   //   // setStateName(select_state);
-  //   //   setLayers([]);
-  //   // }
-  // }, [select_constituency]);
-
-  // ELECTION TYPE BASIC MAP RESULT FETCH
-  // useEffect(() => {
-  //   const getMapResult = async () => {
-  //     setLoading(true);
-  //     const state = electionType === "STATE" ? `&state=${selected_state}` : "";
-  //     const deltaParam =
-  //       default_delta_value === selected_Voter_Percentage.delta
-  //         ? `&delta=0&delta_type=positive`
-  //         : `&delta=${selected_Voter_Percentage.delta}&delta_type=${selected_Voter_Percentage.delta_type}`;
-  //     try {
-  //       const res = await fetch(
-  //         `https://dhruvresearch.com/api/v2/analysis/result?type=${
-  //           electionType === "STATE" ? "state" : "nation"
-  //         }${deltaParam}&party=${selected_party.party}${state}`
-  //       );
-  //       const a = await res.json();
-  //       console.log("mapResult", a);
-
-  //       setMapResult(a.data);
-  //       setLoading(false);
-  //       setCallToGetMapResult(false);
-  //       // setLayers([]);
-  //       // setViewport({
-  //       //   longitude: windowWidth < 640 ? 78.9629 : 78.9629,
-  //       //   latitude: windowWidth < 640 ? 20.5937 : 20.5937,
-  //       //    zoom: windowWidth < 640 ? 2.5 : 3.5,
-  //       // });
-
-  //       // viewport
-  //       if (electionType === "STATE") {
-  //         const stateCoordinates = STATE_COORDINATES.find(
-  //           (row) => row.state.toUpperCase() === selected_state.toUpperCase()
-  //         );
-
-  //         console.log("stateCoordinates", stateCoordinates);
-  //         if (!stateCoordinates) return;
-
-  //         setViewport({
-  //           latitude: stateCoordinates.latitude,
-  //           longitude: stateCoordinates.longitude,
-  //           zoom:
-  //             windowWidth < 800
-  //               ? stateCoordinates.zoom * 0.82
-  //               : stateCoordinates.zoom * 0.98,
-  //         });
-  //       } else {
-  //         setViewport({
-  //           longitude: windowWidth < 640 ? 78.9629 : 78.9629,
-  //           latitude: windowWidth < 640 ? 20.5937 : 20.5937,
-  //           zoom: windowWidth < 640 ? 2.5 : 3.5,
-  //         });
-  //       }
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   if (callToGetMapResult) {
-  //     // setMapResult({});
-  //     if (tooltipRef.current) tooltipRef.current.innerHTML = "";
-  //     getMapResult();
-  //   }
-  // }, [callToGetMapResult]);
-
-  // useEffect(() => {
-  //   // if (JSON.stringify(mapResult) !== "{}")
-  //   if (selected_Voter_Percentage.delta !== -1) setCallToGetMapResult(true);
-  // }, [electionType, selected_party, selected_Voter_Percentage]);
-
-  // ELECTION TYPE BASIC MAP RESULT FETCH
   useEffect(() => {
     const getMapResult = async () => {
       setLoading(true);
@@ -210,45 +77,12 @@ export default function Map3() {
 
         setMapResult(a.data);
         setLoading(false);
-        // setCallToGetMapResult(false);
-        // setLayers([]);
-        // setViewport({
-        //   longitude: windowWidth < 640 ? 78.9629 : 78.9629,
-        //   latitude: windowWidth < 640 ? 20.5937 : 20.5937,
-        //    zoom: windowWidth < 640 ? 2.5 : 3.5,
-        // });
-
-        // // viewport
-        // if (electionType === "STATE") {
-        //   const stateCoordinates = STATE_COORDINATES.find(
-        //     (row) => row.state.toUpperCase() === selected_state.toUpperCase()
-        //   );
-
-        //   console.log("stateCoordinates", stateCoordinates);
-        //   if (!stateCoordinates) return;
-
-        //   setViewport({
-        //     latitude: stateCoordinates.latitude,
-        //     longitude: stateCoordinates.longitude,
-        //     zoom:
-        //       windowWidth < 800
-        //         ? stateCoordinates.zoom * 0.82
-        //         : stateCoordinates.zoom * 0.98,
-        //   });
-        // } else {
-        //   setViewport({
-        //     longitude: windowWidth < 640 ? 78.9629 : 78.9629,
-        //     latitude: windowWidth < 640 ? 20.5937 : 20.5937,
-        //     zoom: windowWidth < 640 ? 2.5 : 3.5,
-        //   });
-        // }
       } catch (error) {
         console.log(error);
       }
     };
 
     if (selected_Voter_Percentage.delta !== -1) {
-      // setMapResult({});
       if (tooltipRef.current) tooltipRef.current.innerHTML = "";
       getMapResult();
     }
@@ -345,76 +179,17 @@ export default function Map3() {
   }, [PCGeojson, StateGeojson, mapResult]);
 
   function abc(d) {
-    // console.log(d.properties.ST_NAME.toUpperCase(), select_state.toUpperCase());
     if (d.properties.ST_NAME.toUpperCase() === select_state.toUpperCase()) {
       return "#000";
     } else {
       return "lightgray";
     }
   }
-  // function _handleMap(object) {
-  //   ////console.log("onclick called", object);
-  //   const stateName = object.properties.ST_NAME;
-
-  //   if (electionType === "LOK SABHA" || electionType === "INDIA") {
-  //     if (select_state === "Select State") {
-  //       // const stateName = object.properties.ST_NAME;
-  //       // const stateCoordinates = STATE_COORDINATES.find(
-  //       //   (row) => row.state === stateName
-  //       // );
-
-  //       // ////console.log("stateCoordinates", stateCoordinates);
-  //       // if (!stateCoordinates) return;
-  //       // setStateName(stateName);
-  //       // setViewport({
-  //       //   latitude: stateCoordinates.latitude,
-  //       //   longitude: stateCoordinates.longitude,
-  //       //   zoom: stateCoordinates.zoom,
-  //       // });
-  //       // setLayers([]);
-  //       setSelect_state(stateName);
-  //     } else if (select_constituency.pcNo === -1) {
-  //       if (stateName.toUpperCase() === select_state.toUpperCase()) {
-  //         setSelect_constituency({
-  //           pcNo: object.properties.PC_NO,
-  //           pcName: object.properties.PC_NAME,
-  //         });
-  //       }
-  //     }
-  //   } else {
-  //     if (select_state === "Select State") {
-  //       // const stateName = object.pro/perties.ST_NAME;
-  //       // const stateCoordinates = STATE_COORDINATES.find(
-  //       //   (row) => row.state === stateName
-  //       // );
-
-  //       // ////console.log("stateCoordinates", stateCoordinates);
-  //       // if (!stateCoordinates) return;
-  //       // setStateName(stateName);
-  //       // setViewport({
-  //       //   latitude: stateCoordinates.latitude,
-  //       //   longitude: stateCoordinates.longitude,
-  //       //   zoom: stateCoordinates.zoom,
-  //       // });
-  //       // setLayers([]);
-
-  //       setSelect_state(stateName);
-  //     } else if (select_constituency.acNo === -1) {
-  //       if (stateName.toUpperCase() === select_state.toUpperCase()) {
-  //         setSelect_constituency({
-  //           acNo: object.properties.AC_NO,
-  //           acName: object.properties.AC_NAME,
-  //         });
-  //       }
-  //     }
-  //   }
-  // }
 
   const _fillGeoJsonColor = useCallback(
     (d) => {
       let obj = null,
         stateName = select_state;
-      // console.log("object d at fillGeoJsonColor", d);
 
       const mapResultData = mapResult["pcWiseData"];
 
@@ -427,46 +202,23 @@ export default function Map3() {
           obj = mapResultData[d.properties.ST_NAME][d.properties.PC_NO];
         }
       } else {
-        // console.log(
-        //   "dsfaj",
-
-        //   d.properties
-        // );
         if (
           mapResultData &&
           mapResultData[d.properties.ST_NAME] &&
           mapResultData[d.properties.ST_NAME][d.properties.PC_NO]
         ) {
-          // console.log(
-          //   "alsdkg",
-          //   mapResultData[d.properties.ST_NAME],
-          //   stateName.toUpperCase() === d.properties.ST_NAME.toUpperCase()
-          // );
           if (stateName.toUpperCase() !== d.properties.ST_NAME.toUpperCase()) {
             // obj = null;
           } else {
-            // console.log(
-            //   "dsfaj",
-
-            //   d.properties
-            // );
             obj = mapResultData[d.properties.ST_NAME][d.properties.PC_NO];
           }
         }
       }
 
-      // console.log("obj", obj);
       let rgba = [];
       if (obj) {
         let party = obj.revisedWinner;
-        // maxVotes = 0;
-        // for (let details of obj.candidates) {
-        //   if (details.votesCount > maxVotes) {
-        //     maxVotes = details.votesCount;
-        //     party = details.party;
-        //   }
-        // }
-        ////console.log("party", party, maxVotes);
+
         if (PARTY_ALLIANCE_COLORS[party])
           rgba = hexRgb(PARTY_ALLIANCE_COLORS[party], {
             format: "array",
@@ -474,29 +226,20 @@ export default function Map3() {
           });
         else rgba = [180, 180, 180];
       } else {
-        //   const rgba = hexRgb(STATE_COLORS[Math.floor(Math.random() * 3)], {
-        //     format: "array",
-        //     alpha: 255,
-        // });
         rgba = [
           MAP_TRANSPARENT_NA_COLOR.red,
           MAP_TRANSPARENT_NA_COLOR.green,
           MAP_TRANSPARENT_NA_COLOR.blue,
           MAP_TRANSPARENT_NA_COLOR.alpha,
         ];
-
-        // ////console.log("no obj when pc_no -1");
       }
-      // let rgba = [];
 
-      // console.log(rgba);
       return rgba;
     },
     [mapResult]
   );
 
   const _getTooltip = ({ object, x, y }) => {
-    //console.log("tooltip called", object);
     if (object && mapResult) {
       let results = null,
         stateName = select_state;
@@ -510,8 +253,6 @@ export default function Map3() {
             mapResultData[object.properties.ST_NAME][object.properties.PC_NO];
         }
       } else {
-        // let results = null,
-        //   stateName = select_state;
         if (
           mapResultData[object.properties.ST_NAME] &&
           mapResultData[object.properties.ST_NAME][object.properties.PC_NO]
@@ -550,27 +291,15 @@ export default function Map3() {
 
       // Adjust for screen boundaries
       if (x + tooltipWidth > containerRef.current.clientWidth) {
-        // x = containerRef.current.clientWidth - tooltipWidth - margin;
-
         x -= tooltipWidth - margin; // + tooltipWidth;
       } else {
         x += margin;
       }
-      // if (x < margin) x = margin;
 
-      // Adjust y to place the cursor at the top-center of the tooltip
-      // console.log("y", y, tooltipHeight, containerRef.current.clientHeight);
-      // y -= tooltipHeight;
-      // y = tooltipHeight;
       y += margin;
       if (y + tooltipHeight > containerRef.current.clientHeight) {
         y = y - tooltipHeight - margin; //tooltipHeight / 2;
-        // y = containerRef.current.clientHeight - y;
-        // y -= 50;
       }
-      // if (y < margin) y = margin;
-
-      // console.log("y", y);
 
       if (results && selected_Voter_Percentage.delta === default_delta_value) {
         let voteShare = "",
@@ -781,13 +510,24 @@ export default function Map3() {
     }));
   };
 
+  const [isRendering1, setIsRendering1] = useState(false);
+  const [isRendering2, setIsRendering2] = useState(false);
   const handleResetToInitial = () => {
     if (electionType === "LOK SABHA" || electionType === "INDIA") {
-      setViewport({
-        longitude: windowWidth < 640 ? 78.9629 : 78.9629,
-        latitude: windowWidth < 640 ? 20.5937 : 20.5937,
-        zoom: windowWidth < 640 ? 2.5 : 3.5,
-      });
+      setViewport(
+        isRendering1
+          ? {
+              longitude: windowWidth < 640 ? 78.9629 : 78.9629,
+              latitude: windowWidth < 640 ? 20.5937 : 20.5937,
+              zoom: windowWidth < 640 ? 2.5 : 3.5,
+            }
+          : {
+              longitude: windowWidth < 640 ? 78.9629 : 78.9629,
+              latitude: windowWidth < 640 ? 20.5937 : 20.5937,
+              zoom: windowWidth < 640 ? 2.500001 : 3.500001,
+            }
+      );
+      setIsRendering1((p) => !p);
     } else {
       const stateCoordinates = STATE_COORDINATES.find(
         (row) => row.state.toUpperCase() === select_state.toUpperCase()
@@ -796,59 +536,30 @@ export default function Map3() {
       ////console.log("stateCoordinates", stateCoordinates);
       if (!stateCoordinates) return;
 
-      setViewport({
-        latitude: stateCoordinates.latitude,
-        longitude: stateCoordinates.longitude,
-        zoom:
-          windowWidth < 800
-            ? stateCoordinates.zoom * 0.82
-            : stateCoordinates.zoom * 0.82,
-      });
+      setViewport(
+        isRendering2
+          ? {
+              latitude: stateCoordinates.latitude,
+              longitude: stateCoordinates.longitude,
+              zoom:
+                windowWidth < 800
+                  ? stateCoordinates.zoom * 0.82
+                  : stateCoordinates.zoom * 0.98,
+            }
+          : {
+              latitude: stateCoordinates.latitude,
+              longitude: stateCoordinates.longitude,
+              zoom:
+                windowWidth < 800
+                  ? stateCoordinates.zoom * 0.8200001
+                  : stateCoordinates.zoom * 0.9800001,
+            }
+      );
+      setIsRendering2((p) => !p);
     }
   };
 
-  //console.log(layers, "layers", viewport);
   const tooltipRef = useRef(null);
-
-  // const getTooltip = ({ object, x, y }) => {
-  //   const tooltip = tooltipRef.current;
-  //   if (!object && !tooltip) {
-  //     tooltip.style.display = "none";
-  //     return null;
-  //   }
-
-  //   // Set tooltip content
-  //   tooltip.innerHTML = "hgdj"; //object.properties.name;
-
-  //   // Set tooltip position
-  //   let tooltipWidth = tooltip.offsetWidth;
-  //   let tooltipHeight = tooltip.offsetHeight;
-  //   const margin = 10;
-
-  //   // Adjust x to center the tooltip horizontally
-  //   x -= tooltipWidth / 2;
-
-  //   // Adjust for screen boundaries
-  //   if (x + tooltipWidth > window.innerWidth) {
-  //     x = window.innerWidth - tooltipWidth - margin;
-  //   }
-  //   if (x < margin) x = margin;
-
-  //   // Adjust y to place the cursor at the top-center of the tooltip
-  //   y -= tooltipHeight;
-
-  //   if (y + tooltipHeight > window.innerHeight) {
-  //     y = window.innerHeight - tooltipHeight - margin;
-  //   }
-  //   if (y < margin) y = margin;
-
-  //   // Set tooltip position
-  //   tooltip.style.left = `${x}px`;
-  //   tooltip.style.top = `${y}px`;
-  //   tooltip.style.display = "block"; // Show the tooltip
-
-  //   return null; // DeckGL won't render its own tooltip
-  // };
 
   useEffect(() => {
     const container = document.getElementById("react-map");
@@ -877,19 +588,13 @@ export default function Map3() {
             getCursor={(e) => _getCursor(e)}
             mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
             pickingRadius={5}
-            // controller={true}
             width="100%"
             height="100%"
             style={{ backgroundColor: "#F0F0F0" }}
             onViewportChange={(nextViewport) => {
               setViewport(nextViewport);
             }}
-            // mapStyle="mapbox://styles/mapbox/light-v9"
             mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
-            // reuseMaps
-            // preventStyleDiffing={true}
-            // attributionControl={false}
-            // onWheel={handleWheel}
             controller={{
               doubleClickZoom: true, // Enable double click to zoom
               scrollZoom: {
@@ -903,22 +608,12 @@ export default function Map3() {
               touchRotate: false,
               touchZoom: true,
             }}
-            // onWheel={handleWheel}
             onHover={_getTooltip}
           >
             <ReactMapGL
-              // ref={mapRef}
-              // layers={layers}
-              // initialViewState={viewport}
-              // width="100%"
-              // height="100%"
-              // onViewportChange={(nextViewport) => setViewport(nextViewport)}
-              // mapStyle="mapbox://styles/mapbox/light-v9"
               mapboxAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
               reuseMaps
               preventStyleDiffing={true}
-              // attributionControl={false}
-              // onWheel={handleWheel}
             ></ReactMapGL>
 
             <div id="map" className="absolute z-50 bottom-0 left-0">
@@ -959,13 +654,13 @@ export default function Map3() {
               position: "absolute",
               right: 20,
               bottom: 10,
-              // border: "1px solid rgba(0, 0, 0, .7)",
+
               display: "flex",
               flexDirection: "column",
               zIndex: 2,
 
               borderRadius: "5px",
-              // boxShadow: "0 0 0 1.5px rgba(0, 0, 0, .3)",
+
               backgroundColor: "rgba(255, 255, 255, .7)",
               paddingBlock: "5px",
             }}
@@ -1032,17 +727,3 @@ export default function Map3() {
     </>
   );
 }
-
-/* <DeckGL
-layers={layers}
-initialViewState={viewport}
-controller={true}
-mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
->
-<ReactMapGL
-  layers={layers}
-  mapboxApiAccessToken={process.env.NEXT_PUBLIC_MAPBOX_API_TOKEN}
-  {...viewport}
-  // mapStyle="mapbox://styles/mapbox/light-v9"
-/>
-</DeckGL> */

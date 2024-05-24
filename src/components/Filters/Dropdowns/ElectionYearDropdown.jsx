@@ -6,54 +6,7 @@ import clsx from "clsx";
 export default function ElectionYearDropdown() {
   const [years, setYears] = useState([2019]);
 
-  // useEffect(() => {
-  //   //toggle sabha selection
-  //   // if (
-  //   //   select_state === "Select State" &&
-  //   //   (select_sabha === "Lok Sabha"
-  //   //     ? select_constituency.pcNo === -1
-  //   //     : select_constituency.acNo === -1) &&
-  //   //   Selected_election_year === "Select Election year" &&
-  //   //   select_compare_year.length === 0
-  //   // ) {
-  //   setCompareYears([]);
-  //   setSelected_election_year("Select Election year");
-  //   // }
-  // }, [select_sabha, select_state, select_constituency]);
-
-  // useEffect(() => {
-  //   const fetchYears = async () => {
-  //     const response = await fetch(
-  //       `https://dhruvresearch.com/api/v2/result/year?state=${select_state}&election_type=${
-  //         select_sabha === "Vidhan Sabha" ? "VS" : "LS"
-  //       }&constituency=${
-  //         select_sabha === "Vidhan Sabha"
-  //           ? select_constituency.acNo
-  //           : select_constituency.pcNo
-  //       }`
-  //     );
-  //     const responseData = await response.json();
-  //     // console.log("result", responseData);
-  //     setYears(responseData.data);
-  //   };
-  //   if (
-  //     (select_sabha === "Vidhan Sabha"
-  //       ? select_constituency.acNo
-  //       : select_constituency.pcNo) !== -1
-  //   ) {
-  //     try {
-  //       fetchYears();
-  //     } catch (error) {
-  //       console.log("error in fetch years", error);
-  //     }
-  //   }
-  // }, [select_constituency]);
-
-  //select_election_year
   const handleSelectElectionYear = (ElectionYear) => {
-    // resetFilterToInitial(1);
-    // setSelect_election_year(ElectionYear);
-
     setShowElectionYearDropDown(false);
     console.log("ElectionYear", ElectionYear);
     setSelected_election_year(ElectionYear);
@@ -73,40 +26,10 @@ export default function ElectionYearDropdown() {
       <legend className="text-[12px] text-gray-500 mx-2 px-1 relative">
         Election Year <span className="text-[red]">*</span>
       </legend>
-      <div
-        className="w-[95%] px-2 text-gray-500 relative flex items-center"
-        // onClick={() => {
-        //   //reconcilation and batching
-        //   setShowElectionYearDropDown((prev) => !prev);
-        //   // reset all other dropdowns
-        //   setShowStateDropDown(false);
-        //   setShowPCDropDown(false);
-        //   setShowPartyDropDown(false);
-        // }}
-      >
+      <div className="w-[95%] px-2 text-gray-500 relative flex items-center">
         <span id="select-box-3 " className="text-sm text-black font-semibold">
           {selected_election_year + " LS"}
         </span>
-        {/* <span className="text-[gray] absolute right-[0px]">
-          <svg
-            className="w-4"
-            version="1.0"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 32.000000 32.000000"
-            preserveAspectRatio="xMidYMid meet"
-          >
-            <g
-              transform="translate(0.000000,32.000000) scale(0.100000,-0.100000)"
-              fill="gray"
-              stroke="none"
-            >
-              <path
-                d="M50 197 c0 -18 92 -107 111 -107 18 0 109 90 109 108 0 23 -24 12
-                    -67 -30 l-43 -42 -43 42 c-43 42 -67 53 -67 29z"
-              />
-            </g>
-          </svg>
-        </span> */}
       </div>
 
       {/* <!-- drop down --> */}
