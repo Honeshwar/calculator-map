@@ -5,7 +5,7 @@
  */
 const Loading = () => {
   return (
-    <div className="loading-container">
+    <div id="election_calculator-loader" className="loading-container">
       <div className="loading-spinner" style={{ fontSize: "6px" }} />
     </div>
   );

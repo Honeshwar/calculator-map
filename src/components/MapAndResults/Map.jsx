@@ -16,7 +16,7 @@ import {
 import { useFilterContextValue } from "../../context/FilterContext";
 import hexRgb from "hex-rgb";
 import Loading from "../Loading";
-export default function Map3() {
+export default function Map() {
   const windowWidth = typeof window !== "undefined" ? window.innerWidth : 500;
 
   const deckRef = useRef(null);
@@ -36,19 +36,19 @@ export default function Map3() {
     selected_state,
 
     PCGeojson,
-    ACGeojson,
+
     StateGeojson,
     isFetchingGeojson,
-    setIsFetchingGeojson,
+
     selected_Voter_Percentage,
     default_delta_value,
   } = useFilterContextValue();
 
   const [select_state, setSelect_state] = useState("Select State");
-  const [select_constituency, setSelect_constituency] = useState({
-    pcNo: -1,
-    pcName: "Select Constituency",
-  });
+  // const [select_constituency, setSelect_constituency] = useState({
+  //   pcNo: -1,
+  //   pcName: "Select Constituency",
+  // });
 
   useEffect(() => {
     if (electionType === "STATE") {
@@ -73,7 +73,7 @@ export default function Map3() {
           }${deltaParam}&party=${selected_party.party}${state}`
         );
         const a = await res.json();
-        console.log("mapResult", a);
+        // console.log("mapResult", a);
 
         setMapResult(a.data);
         setLoading(false);
@@ -88,9 +88,9 @@ export default function Map3() {
     }
   }, [electionType, selected_party, selected_Voter_Percentage]);
 
-  useEffect(() => {
-    console.log("mapResult", mapResult, deckRef);
-  }, [mapResult]);
+  // useEffect(() => {
+  //   console.log("mapResult", mapResult, deckRef);
+  // }, [mapResult]);
   useEffect(() => {
     if (
       // layers.length === 0 &&
@@ -578,7 +578,7 @@ export default function Map3() {
         <div
           ref={containerRef}
           id="react-map"
-          className=" w-full h-[50vh]   lg:h-auto  overflow-visible relative"
+          className="election_calculator-tooltip w-full h-[50vh]   lg:h-auto  overflow-visible relative"
         >
           <DeckGL
             ref={deckRef}

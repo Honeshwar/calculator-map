@@ -23,7 +23,7 @@ export default function StateDropdown() {
           process.env.NEXT_PUBLIC_API_URL + `/analysis/state`
         );
         const responseData = await response.json();
-        console.log("response state", responseData);
+        // console.log("response state", responseData);
         setStates(responseData.data);
       } catch (error) {
         console.log("error in fetch states", error);

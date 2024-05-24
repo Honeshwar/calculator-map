@@ -125,7 +125,10 @@ function RangeSlider() {
         <Loading />
       ) : (
         <>
-          <div className="w-full flex gap-3 items-center mt-6">
+          <div
+            id="election_calculator-rangeInput"
+            className="w-full flex gap-3 items-center mt-6"
+          >
             <div className="slider-container px-3  py-[10px] border-2 rounded-full flex justify-center items-center">
               <input
                 ref={inputRef}
@@ -304,7 +307,10 @@ function RangeSlider() {
           </div>
 
           {/* after input slider */}
-          <div className="w-full flex justify-center items-center gap-5    mt-8">
+          <div
+            id="election_calculator-rangeBtn"
+            className="w-full flex justify-center items-center gap-5    mt-8"
+          >
             {/* decrease input */}
             <form
               onSubmit={(e) => {

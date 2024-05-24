@@ -1,24 +1,7 @@
-"use client";
-import clsx from "clsx";
-import { useEffect, useState } from "react";
-
-export default function RangeSliderAnimation({
-  closeAnimation,
-  setCloseAnimation,
-}) {
-  useEffect(() => {
-    document.body.style.overflow = "auto";
-    const timeout = setTimeout(() => {
-      if (closeAnimation === false) setCloseAnimation(true);
-    }, 3000);
-
-    return () => {
-      clearTimeout(timeout);
-      document.body.style.overflow = "auto";
-    };
-  });
+export default function RangeSliderAnimation({ setCloseAnimation }) {
   return (
     <div
+      id="election_calculator-range_animation"
       onClick={() => setCloseAnimation(true)}
       className="z-50 fixed  top-0 left-0 bg-black/55 w-full h-full flex justify-center items-center px-2"
     >
@@ -48,7 +31,7 @@ export default function RangeSliderAnimation({
           Drag left and right progress bar to change votershare percentage
         </h5>
 
-        <div className="slider-container  py-[10px] border-2 rounded-full flex justify-center items-center px-5">
+        <div className="slider-container  py-[10px] border-2 rounded-full flex justify-center items-center px-5 mt-4">
           <input
             id="range-slider"
             type="range"
@@ -61,7 +44,7 @@ export default function RangeSliderAnimation({
           />
           <span
             className={"value-display  "}
-            style={{ left: 60 - 1 + `%`, color: "green" }}
+            style={{ left: 60 - 1 + `%`, color: "green", top: "-25px" }}
           >
             {60 + "%"}
           </span>
@@ -72,7 +55,7 @@ export default function RangeSliderAnimation({
 
           <span
             className={"value-display mt-4 cursor-pointer"}
-            style={{ left: 37.2 + 2 + `%`, color: "gray" }}
+            style={{ left: 37.2 + 2 + `%`, color: "gray", top: "23px" }}
           >
             {37.2}%
           </span>

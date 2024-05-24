@@ -42,42 +42,19 @@ function FilterContextProvider({ children }) {
     ) {
       Promise.all([
         fetch(`data/geojson/states.geojson`),
-        // fetch(`data/geojson/assembly.geojson`),
+
         fetch(`data/geojson/parliament.geojson`),
-        // fetch(`https://dhruvresearch.com/api/v2/result/map?election_type=LS`),
-        // fetch(
-        //   `https://dhruvresearch.com/api/v2/analysis/result?party=BJP&delta=0&delta_type=positive&state=Delhi&type=nation`
-        // ),
       ])
-        .then(async ([res1, res3, res4]) => {
+        .then(async ([res1, res3]) => {
           const a = await res1.json();
-          // const b = await res2.json();
+
           const c = await res3.json();
-          // const d = await res4.json();
-          // console.log("geojson", a, c, d);
-          console.log("geojson", a, c);
-          // setStateGeojson(a);
-          // setStateLayer(
-          //   new GeoJsonLayer({
-          //     id: "state-geojson-layer",
-          //     data: a,
-          //     stroked: true,
-          //     filled: false,
-          //     lineWidthScale: 600,
-          //     getLineColor:
-          //       electionType === "STATE"
-          //         ? TRANSPARENT_COLOR
-          //         : DEFAULT_STATE_LINE_COLOR,
-          //     getFillColor: TRANSPARENT_COLOR,
-          //     getLineWidth: 4,
-          //   })
-          // );
+
+          // console.log("geojson", a, c);
 
           setStateGeojson(a);
-          // setACGeojson(b);
+
           setPCGeojson(c);
-          // setMapResult(d.data);
-          // setLoading(false);
 
           setIsFetchingGeojson(false);
         })
@@ -86,102 +63,19 @@ function FilterContextProvider({ children }) {
         });
     }
   }, []);
-  // useEffect(() => {
-  //   if (stateLayer) {
-  //     setStateLayer(
-  //       new GeoJsonLayer({
-  //         id: "state-geojson-layer",
-  //         data: a,
-  //         stroked: true,
-  //         filled: false,
-  //         lineWidthScale: 600,
-  //         getLineColor:
-  //           electionType === "STATE"
-  //             ? TRANSPARENT_COLOR
-  //             : DEFAULT_STATE_LINE_COLOR,
-  //         getFillColor: TRANSPARENT_COLOR,
-  //         getLineWidth: 4,
-  //       })
-  //     );
-  //   }
-  // }, [electionType]);
-  // // ELECTION TYPE BASIC MAP RESULT FETCH
-  // useEffect(() => {
-  //   const getMapResult = async () => {
-  //     setIsFetchingGeojson(true);
-  //     try {
-  //       const res = await fetch(
-  //         `https://dhruvresearch.com/api/v2/result/map?election_type=${
-  //           electionType === "STATE" ? "VS" : "LS"
-  //         }`
-  //       ); //party param &patry = selected_party, &state = selected_state , &year = selected_election_year, &constituency = selected_pc, &voter_percentage = selected_Voter_Percentage
-  //       const a = await res.json();
-  //       // console.log("geojson", a, c, d);
-  //       console.log("mapResult", a);
-
-  //       setMapResult(a.data);
-  //       setIsFetchingGeojson(false);
-  //       setCallToGetMapResult(false);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   };
-
-  //   if (callToGetMapResult) {
-  //     // setMapResult({});
-  //     getMapResult();
-  //   }
-  // }, [callToGetMapResult]);
-
-  // useEffect(() => {
-  //   if (JSON.stringify(mapResult) !== "{}") setCallToGetMapResult(true);
-  // }, [
-  //   electionType,
-  //   selected_party,
-  //   selected_state,
-  //   selected_pc,
-  //   setSelected_election_year,
-  //   selected_Voter_Percentage,
-  // ]);
-
-  //   fetching map result
-  //   useEffect(() => {
-  //     const getMapResult = async () => {
-  //       try {
-  //         const res = await fetch(
-  //           `https://dhruvresearch.com/api/v2/result/map?election_type=LS`
-  //         );
-  //         // ${
-  //         //     select_sabha === "Vidhan Sabha" ? "VS" : "LS"
-  //         //   }${select_state !== "Select State" ? `&state=${select_state}` : ""}${
-  //         //     select_election_year !== "Select Election year"
-  //         //       ? `&year=${select_election_year}`
-  //         //       : ""
-  //         //   }
-  //         const d = await res.json();
-
-  //         // //console.log("mapResult", d);
-
-  //         setMapResult(d.data);
-  //         //console.log("select-state", Object.keys(d.data));
-  //         // select_sabha === "Vidhan Sabha"
-  //         //   ? setSelect_state(Object.keys(d.data)[0])
-  //         //   : null;
-  //         // setLoading(false);
-  //       } catch (error) {
-  //         //console.log("error in fetch map election result", error);
-  //       }
-  //     };
-  //     setLoading(true);
-  //     getMapResult();
-  //   }, [select_sabha, select_state, select_election_year]);
 
   const [closeAnimation, setCloseAnimation] = useState(false);
-  // useEffect(() => {
-  //   const closeA = localStorage.getItem("onceCloseAnimation");
-  //   if (closeA === null) setCloseAnimation(-1);
-  // }, []);
-  // const [stateLayer, setStateLayer] = useState(null);
+  useEffect(() => {
+    document.body.style.overflow = "auto";
+    const timeout = setTimeout(() => {
+      if (closeAnimation === false) setCloseAnimation(true);
+    }, 3000);
+
+    return () => {
+      clearTimeout(timeout);
+      document.body.style.overflow = "auto";
+    };
+  });
   return (
     <context.Provider
       value={{
@@ -227,7 +121,7 @@ function FilterContextProvider({ children }) {
 
       {(!closeAnimation || closeAnimation === -1) && (
         <RangeSliderAnimation
-          closeAnimation={closeAnimation}
+          // closeAnimation={closeAnimation}
           setCloseAnimation={setCloseAnimation}
         />
       )}

@@ -28,7 +28,7 @@ export default function PartyDropdown() {
           process.env.NEXT_PUBLIC_API_URL + "/analysis/party" + param
         );
         const responseData = await response.json();
-        console.log("response party", responseData);
+        // console.log("response party", responseData);
         setParties(responseData.data);
         setSelected_party({
           party: responseData.data[0],

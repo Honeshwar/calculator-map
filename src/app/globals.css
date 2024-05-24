@@ -2,42 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-} */
 /* Loading Status Animation */
-.loading-container {
+#election_calculator-loader.loading-container {
   display: flex;
   overflow: hidden;
   margin: auto !important;
 }
-.loading-spinner {
+#election_calculator-loader .loading-spinner {
   opacity: 0.8;
   width: 10em;
   height: 10em;
@@ -57,7 +28,7 @@ body {
 }
 
 /* tooltip of map */
-.deck-tooltip {
+.election_calculator-tooltip .deck-tooltip {
   background-color: white !important;
   padding: 0 !important;
   color: black !important;
@@ -67,12 +38,14 @@ body {
 }
 
 /* voter share range slider */
-.slider-container {
+#election_calculator-rangeInput .slider-container,
+#election_calculator-range_animation .slider-container {
   position: relative;
   width: 100%;
 }
 
-.slider {
+#election_calculator-rangeInput .slider,
+#election_calculator-range_animation .slider {
   -webkit-appearance: none; /* Remove default styles */
   width: 100%; /* Set width */
   height: 7px; /* Set height */
@@ -90,7 +63,8 @@ body {
   background-color: #cccccc;
 }
 
-.slider::-webkit-slider-thumb {
+#election_calculator-rangeInput .slider::-webkit-slider-thumb,
+#election_calculator-range_animation .slider::-webkit-slider-thumb {
   -webkit-appearance: none; /* Remove default styles */
   appearance: none;
   width: 20px; /* Set thumb width */
@@ -108,40 +82,29 @@ body {
   background: #ce7a04;
   box-shadow: -125px 0 0 120px #ff9500;
 }
-/* .slider::before {
-  content: "";
-  width: 1px;
-  height: 100%;
-  position: absolute;
-  top: 0%;
-  left: calc(60% + 2.8%);
 
-  border-left: 1px dashed gray;
-  z-index: 11;
-} */
-.slider::-webkit-slider-runnable-track {
-  /* height: 10px; */
+#election_calculator-rangeInput .slider::-webkit-slider-runnable-track {
   -webkit-appearance: none;
   color: #13bba4;
-  /* margin-top: -1px; */
 }
 
 /** FF*/
-i.slider::-moz-range-progress {
+#election_calculator-rangeInput .slider::-moz-range-progress {
   background-color: #ff9602;
 }
-i.slider::-moz-range-track {
+#election_calculator-rangeInput .slider::-moz-range-track {
   background-color: #ff9602;
 }
 /* IE*/
-i.slider::-ms-fill-lower {
+#election_calculator-rangeInput .slider::-ms-fill-lower {
   background-color: #ff9602;
 }
-i.slider::-ms-fill-upper {
+#election_calculator-rangeInput .slider::-ms-fill-upper {
   background-color: #ff9602;
 }
 
-.value-display {
+#election_calculator-rangeInput .value-display,
+#election_calculator-range_animation .value-display {
   position: absolute;
   top: 40px;
   left: 50%;
@@ -151,7 +114,7 @@ i.slider::-ms-fill-upper {
 }
 
 /* pointer-cursor-animation */
-.pointer-cursor-animation {
+#election_calculator-range_animation .pointer-cursor-animation {
   animation: cursor 1s 0s ease-in-out infinite alternate;
 }
 @keyframes cursor {
@@ -164,13 +127,15 @@ i.slider::-ms-fill-upper {
 }
 
 /* Force spinner controls to be always visible on WebKit browsers (e.g., Chrome, Safari) */
-.number-input[type="number"]::-webkit-inner-spin-button,
-.number-input[type="number"]::-webkit-outer-spin-button {
+#election_calculator-rangeBtn
+  .number-input[type="number"]::-webkit-inner-spin-button,
+#election_calculator-rangeBtn
+  .number-input[type="number"]::-webkit-outer-spin-button {
   opacity: 1;
   display: inline-block;
 }
 
 /* Forcing visibility for non-WebKit browsers like Firefox */
-.number-input[type="number"] {
+#election_calculator-rangeBtn .number-input[type="number"] {
   -moz-appearance: number-input;
 }
