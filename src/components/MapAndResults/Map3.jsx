@@ -437,19 +437,19 @@ export default function Map3() {
           mapResultData[d.properties.ST_NAME] &&
           mapResultData[d.properties.ST_NAME][d.properties.PC_NO]
         ) {
-          console.log(
-            "alsdkg",
-            mapResultData[d.properties.ST_NAME],
-            stateName.toUpperCase() === d.properties.ST_NAME.toUpperCase()
-          );
+          // console.log(
+          //   "alsdkg",
+          //   mapResultData[d.properties.ST_NAME],
+          //   stateName.toUpperCase() === d.properties.ST_NAME.toUpperCase()
+          // );
           if (stateName.toUpperCase() !== d.properties.ST_NAME.toUpperCase()) {
             // obj = null;
           } else {
-            console.log(
-              "dsfaj",
+            // console.log(
+            //   "dsfaj",
 
-              d.properties
-            );
+            //   d.properties
+            // );
             obj = mapResultData[d.properties.ST_NAME][d.properties.PC_NO];
           }
         }
@@ -971,13 +971,13 @@ export default function Map3() {
             }}
           >
             <button
-              className="py-[5px] px-[10px]   hover:bg-[#2c6ed8]
+              className="py-[5px] px-[10px] group  hover:bg-[#2c6ed8]
               "
               onClick={handleZoomIn}
             >
               <svg
                 fill="#317EFC"
-                className="hover:fill-white "
+                className="group-hover:fill-white "
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 448 512"
                 width="18px"
@@ -987,12 +987,12 @@ export default function Map3() {
               </svg>
             </button>
             <button
-              className="py-[4px] px-[10px]  hover:bg-[#2c6ed8]  "
+              className="py-[4px] px-[10px] group hover:bg-[#2c6ed8]  "
               onClick={handleZoomOut}
             >
               <svg
                 fill="#317EFC"
-                className="hover:fill-white "
+                className="group-hover:fill-white "
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 448 512"
                 width="18px"
@@ -1003,12 +1003,12 @@ export default function Map3() {
               </svg>
             </button>
             <button
-              className="py-[5px] px-[10px] hover:bg-[#2c6ed8]"
+              className="py-[5px] px-[10px] group hover:bg-[#2c6ed8]"
               onClick={handleResetToInitial}
             >
               <svg
                 fill="#317EFC"
-                className="hover:fill-white "
+                className="group-hover:fill-white "
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 576 512"
                 width="18px"

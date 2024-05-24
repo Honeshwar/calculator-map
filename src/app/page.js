@@ -34,7 +34,7 @@ export default function Home() {
               <Result />
             </div>
 
-            {/* <MapViewAndResult /> */}
+            <MapViewAndResult />
           </section>
         </main>
       </FilterContextProvider>

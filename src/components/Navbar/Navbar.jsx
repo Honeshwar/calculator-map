@@ -13,7 +13,7 @@ const Navbar = () => {
   const dropdownRef = useRef(null);
   useEffect(() => {
     function handleClickOutside(event) {
-      console.log("first");
+      // console.log("first");
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setDropDownIsOpen(false);
       }

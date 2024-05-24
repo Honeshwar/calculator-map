@@ -135,14 +135,20 @@ function RangeSlider() {
       deltaRef.current.innerText = newDelta.toFixed(0) + "%";
     }
 
-    debouncedHandleChange({
-      delta: Math.abs(newDelta).toFixed(0),
-      delta_type: newDelta >= 0 ? "positive" : "negative",
-    });
+    if (newValue === default_delta_value)
+      debouncedHandleChange({
+        delta: default_delta_value,
+        delta_type: "positive",
+      });
+    else
+      debouncedHandleChange({
+        delta: Math.abs(newDelta).toFixed(0),
+        delta_type: newDelta >= 0 ? "positive" : "negative",
+      });
     setValue(Number(newValue));
   };
 
-  console.log("value", value, value === default_delta_value);
+  // console.log("value", value, value === default_delta_value);
   function debouncing(func, delay) {
     let timeoutId;
     return (...args) => {

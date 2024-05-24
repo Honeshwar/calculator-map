@@ -54,7 +54,13 @@ export default function Result() {
     }
   }, [mapResult.summary]);
 
-  // console.log("data summary", data);
+  // console.log(
+  //   "data summary",
+  //   selected_Voter_Percentage,
+  //   default_delta_value,
+  //   typeof selected_Voter_Percentage.delta,
+  //   typeof default_delta_value
+  // );
   return (
     <>
       {isFetchingGeojson ? (
@@ -69,7 +75,7 @@ export default function Result() {
 
           <ul className="flex flex-col gap-2 float-right mt-2">
             {mapResult.summary === undefined && <p>No result found</p>}
-            {selected_Voter_Percentage.delta === default_delta_value
+            {Number(selected_Voter_Percentage.delta) === default_delta_value
               ? mapResult.summary?.map((item, i) => (
                   <li
                     key={item.party + "-" + i}
